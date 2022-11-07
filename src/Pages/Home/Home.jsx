@@ -1,42 +1,62 @@
-import React from "react";
-import { useEffect } from "react";
+// import { Carousel } from 'antd';
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getProductApi } from "../../redux/productReducer/productReducer";
-
+import Carousel_Shoe from "./Carousel_Shoe";
 export default function Home() {
   const { arrProduct } = useSelector((state) => state.productReducer);
   const dispatch = useDispatch();
+  // const stateA = useSelector(state => state.productReducer.stateA);
 
   useEffect(() => {
-    //ham nay se chay 1 lan sau khi compunent load xong giao dien
+    //Hàm này sẽ 1 lần sau khi component load xong giao diện
+    //Gọi api
     const action = getProductApi();
+    /*
+     action = async dispatch => {
+          //Xử lý api
+          let result = await axios({
+              url:'https://shop.cyberlearn.vn/api/Product',
+              method:'GET'
+          });
+          //Sau khi lấy dữ liệu từ api về => dispatch lên reducer
+          //Tạo ra action creator đưa dữ liệu lên reducer
+          const action = getDataProductAction(result.data.content);
+          dispatch(action);
+      }
+    */
     dispatch(action);
   }, []);
+
   return (
     <div>
-      <div className="carousel"></div>
-      <div className="container">
-        <h3>Product List</h3>
-        <div className="row">
-          {arrProduct.map((item, index) => {
+      <div className="carousel">
+        <Carousel_Shoe />
+      </div>
+      <div className="container product">
+        <h2>Product Feature</h2>
+        <div className="row product-home">
+          {arrProduct.map((prod, index) => {
             return (
-              <div className="col-4" key={index}>
-                <div className="card">
-                  <img
-                    className="card-img-top w-100"
-                    src={item.image}
-                    alt="Title"
-                  />
+              <div className="col-4  product-col" key={index}>
+                <div className="card product-card">
+                  <img src={prod.image} alt="..." />
+                  <i className="fas fa-heart    "></i>
                   <div className="card-body">
-                    <h4 className="card-title">{item.name}</h4>
-                    <p className="card-text">{item.price}</p>
+                    <h3>{prod.name}</h3>
+                    <p>{prod.description.length>75 ?prod.description.substr(0,75)+'...':prod.description}</p>
+                    <div className="d-flex align-items-center card-end">
                     <NavLink
-                      to={`/detail/${item.id}`}
-                      className="btn btn-warning"
+                      to={`/detail/${prod.id}`}
+                      className=" w-50 button-buy"
                     >
-                      Add to cart <i className="fas fa-cart-plus    "></i>
+                      Buy Now <i className="fa fa-cart-plus"></i>
                     </NavLink>
+                    <h5 className="w-50">{prod.price}$</h5>
+                    
+                    </div>
+                    
                   </div>
                 </div>
               </div>

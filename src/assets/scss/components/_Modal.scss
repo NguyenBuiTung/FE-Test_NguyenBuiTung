@@ -1,0 +1,23 @@
+@import "../base/base";
+@import "../varialble/varialble";
+.ant-modal-content {
+  .ant-modal-header {
+    .ant-modal-title {
+        
+    }
+  }
+  .ant-modal-body {
+    .ant-divider {
+      border-top: none;
+     margin: 0 ;
+    }
+    .ant-table-wrapper {
+      .ant-table-pagination {
+        display: none;
+      }
+    }
+  }
+  .ant-modal-footer {
+    border-top: none;
+  }
+}

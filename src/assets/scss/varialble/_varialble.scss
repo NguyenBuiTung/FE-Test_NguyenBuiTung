@@ -1,0 +1,40 @@
+$text-c1-primary: #2a73dd;
+$text-c1-dark: #000;
+$text-c1-light: #fff;
+$text-xs: 14px;
+$text-base: 16px;
+$text-xl: 18px;
+$text-2xl: 20px;
+$text-3xl: 30px;
+$text-4xl: 40px;
+$text-5xl: 50px;
+$text-6xl: 60px;
+$text-ligt: 300;
+$text-regular: 400;
+$text-semibold: 600;
+$text-bold: 700;
+
+//backgroud
+$bg-c1-primary: #2a73dd;
+$bg-c1-light: #f5f9fe;
+$bg-dark: #000;
+$bg-button:#9de167;
+
+//Ham trong scss (mixin)
+@mixin text($fs: $text-2xl, $fw: $text-ligt, $c: $text-c1-dark) {
+    font-size: $fs;
+    font-weight: $fw;
+    color: $c;
+}
+@mixin button($fs, $fw, $c, $bg, $pd, $bd, $br, $bg-hover, $c-hover) {
+    @include text($fs, $fw, $c);
+    background: $bg;
+    padding: $pd;
+    border: $bd;
+    border-radius: $br;
+    cursor: pointer;
+    &:hover {
+        background: $bg-hover;
+        color: $c-hover;
+    }
+}

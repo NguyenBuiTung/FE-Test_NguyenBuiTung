@@ -1,0 +1,39 @@
+@import "../base/base";
+@import "../varialble/varialble";
+.headerhome {
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    img{
+      width: 116px;
+      height: 32px;
+    }
+    .login-nav{
+      font-size: 17px;
+      margin-left: 10px;
+      color: $bg-c1-primary;
+    }
+    .login-return{
+      font-size: 17px;
+      margin-left: 10px;
+      color:$text-c1-primary;
+    }
+    button{
+  font-size: 17px;
+  color: red;
+    }
+    width: 60%;
+    img {
+      margin-left: 25px;
+    }
+  }
+}
+.header-end {
+  margin-left: 25px;
+  margin-top: 16px;
+  display: inline-block;
+  color: $bg-dark;
+  font-weight: 400;
+  font-size: $text-2xl;
+  line-height: 24px;
+}

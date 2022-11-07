@@ -1,0 +1,187 @@
+@import "../base/base";
+@import "../varialble/varialble";
+// .container{}
+.detail {
+  padding: 58px 0;
+  .col-4 {
+    background: #f8f8f8;
+    img {
+    }
+  }
+  .col-8 {
+    .ant-form {
+      padding-left: 128px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      .detail-name {
+        font-weight: 300;
+        font-size: 30px;
+        line-height: 36px;
+        color: #000000;
+        margin-bottom: 9px;
+        margin-top: 0;
+      }
+      p {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: #140101;
+      }
+      h4 {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 29px;
+        color: #1ed90e;
+      }
+      .ant-form-item {
+        margin-bottom: 0;
+        .ant-radio-button-wrapper {
+          // background: #cccccc;
+          font-weight: 600;
+          /* identical to box height */
+          color: #1e1d1d;
+          .ant-radio-button {
+          }
+        }
+      }
+      h5 {
+        margin: 0;
+        padding: 17px 0;
+        font-weight: 600;
+        font-size: 30px;
+        line-height: 36px;
+        color: #fc0303;
+      }
+      .ant-btn {
+      }
+      .detail-quantity {
+        .quantity {
+          padding: 0 15px;
+        }
+      }
+      .add-to-cart {
+        margin-top: 10px;
+        background: linear-gradient(
+          270deg,
+          rgba(62, 32, 248, 0.9) 5.14%,
+          #d017ee 89.71%
+        );
+        height: 40px;
+        color: #f8f8f8;
+      }
+    }
+  }
+}
+.related-product {
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+  color: #ffffff;
+  background: linear-gradient(180deg, #f21299 0%, #1b02b5 100%);
+  padding: 12px 0;
+}
+.product-row {
+  .product-col {
+    display: flex;
+    margin-top: 24px;
+    .product-card {
+      position: relative;
+      img {
+      }
+      .fas {
+        color: #fb0b0b;
+        position: absolute;
+        top: 30px;
+        left: 85%;
+        font-size: $text-4xl;
+      }
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        h3 {
+          font-weight: 300;
+          font-size: 24px;
+          color: $bg-dark;
+        }
+        p {
+          flex: 1;
+          font-weight: 300;
+          font-size: 20px;
+          color: #cbc9c9;
+        }
+      }
+    }
+  }
+}
+// .product-feature {
+//   font-weight: 400;
+//   font-size: 40px;
+//   line-height: 48px;
+//   color: #ffffff;
+//   background: linear-gradient(180deg, #f21299 0%, #1b02b5 100%);
+//   padding: 12px 0;
+// }
+// .product-home {
+//   .product-col {
+//     display: flex;
+//     margin-top: 24px;
+//     .product-card {
+//       position: relative;
+//       img {
+//       }
+//       .fa-heart {
+//         color: #fb0b0b;
+//         position: absolute;
+//         top: 30px;
+//         left: 85%;
+//         font-size: $text-4xl;
+//         // font-weight: 400;
+//       }
+//       .card-body {
+//         display: flex;
+//         flex-direction: column;
+
+//         h3 {
+//           font-weight: 300;
+//           font-size: 24px;
+//           color: $bg-dark;
+//         }
+//         p {
+//           flex: 1;
+//           font-weight: 300;
+//           font-size: 20px;
+//           color: #cbc9c9;
+//         }
+//         .card-end {
+//           background-color: #9de167;
+
+//           h5 {
+//             margin-bottom: 0;
+//             text-align: center;
+//             background-color: #dedddc;
+//             padding: 17px 27px;
+//             font-weight: 600;
+//             //   font-size: 20px;
+//           }
+//           .button-buy {
+//             text-align: center;
+
+//             font-weight: 400;
+//             color: $bg-dark;
+//             cursor: pointer;
+//             // font-size: 20px;
+//             //   line-height: 29px;
+//             &:hover {
+//               transition-duration: 0.5s;
+//               color: #fb0b0b;
+//               background-color: #2a73dd;
+//               padding: 17px 27px;
+//               border: solid 1px #2a73dd;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }

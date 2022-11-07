@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ACCESSTOKEN, https, settings, USER_LOGIN } from "../../util/config";
+import { ACCESSTOKEN, http, settings, USER_LOGIN } from "../../util/config";
 
 const initialState = {
-  //Neu localstore co du lieu => load du lieu defaul cho state .userLogin cua redux,neu localstore khog co thi gan object{}
+  //nếu localstorage có dữ liệu -> load dữ liệu default cho state.userLogin của redux, nếu localstorage không có thì gán object {}
   userLogin: settings.getStorageJson(USER_LOGIN)
     ? settings.getStorageJson(USER_LOGIN)
     : {},
   userProfile: {},
+  userRegister:{}
 };
 
 const userReducer = createSlice({
@@ -14,50 +15,103 @@ const userReducer = createSlice({
   initialState,
   reducers: {
     loginAction: (state, action) => {
+      //B1: Lấy dữ liệu payload
       const userLogin = action.payload;
+      //B2: Cập nhật lại state
       state.userLogin = userLogin;
     },
     getProfileAction: (state, action) => {
       state.userProfile = action.payload;
     },
+    registerAction: (state, action) => {
+      const userRegister = action.payload;
+      state.userRegister = userRegister;
+    },
   },
 });
 
-export const { loginAction, getProfileAction } = userReducer.actions;
+export const { loginAction, getProfileAction,registerAction } = userReducer.actions;
 
 export default userReducer.reducer;
 
+//-------------- async action ----------
+
 /**
  *
- * @param {*} userLogin :{email,password}
- * @returns tra ve action loai 2 ={dispatch}={}
+ * @param {*} userLogin userLogin : {email:'', password:''}
+ * @returns trả về action loại 2 action = (dispatch) => {}
  */
 export const loginApi = (userLogin) => {
-  // console.log(userLogin);
   return async (dispatch) => {
-    // console.log("first");
-    const result = await https.post("/api/users/signin", userLogin);
+    const result = await http.post("/api/users/signin", userLogin);
+    //sau khi lấy dữ liệu tạo ra actionCreator = {type:,payload}
     const action = loginAction(result.data.content);
-    dispatch(action);
-    //Luu vao localstore va cookie
+    // console.log(action);
+    await dispatch(action);
+
+    //Thay vì sau khi đăng nhập xong gọi api get profile thì logic đó mình đã code rồi => bây giờ chỉ cần dùng dispatch để gọi lại
+
+    //dispatch lại logic của 1 action async
+    const actionGetProfile = getProfileApi();
+    dispatch(actionGetProfile);
+
+    //Lưu vào localstorage và cookie
     settings.setStorageJson(USER_LOGIN, result.data.content);
+
     settings.setStorage(ACCESSTOKEN, result.data.content.accessToken);
+
     settings.setCookie(ACCESSTOKEN, result.data.content.accessToken, 30);
   };
 };
+
 export const getProfileApi = () => {
-  // try {
   return async (dispatch) => {
-    // console.log("first");
-    const result = await https.post("/api/Users/getProfile");
+    const result = await http.post("/api/users/getprofile");
     const action = getProfileAction(result.data.content);
-   
-    
+    dispatch(action);
   };
-  // } catch (err) {
-  //   if (err.reponse?.status === 401) {
-  //     alert("Dang nhap de vao trang nay");
-  //     navigate('/login')
-  //   }
-  // }
+};
+
+export const loginFacebookApi = (tokenFBApp) => {
+  return async (dispatch) => {
+    const result = await http.post("/api/Users/facebooklogin", {
+      facebookToken: tokenFBApp,
+    });
+    //sau khi lấy dữ liệu tạo ra actionCreator = {type:,payload}
+    const action = loginAction(result.data.content);
+    await dispatch(action);
+
+    const actionGetProfile = getProfileApi();
+    dispatch(actionGetProfile);
+
+    //Lưu vào localstorage và cookie
+    settings.setStorageJson(USER_LOGIN, result.data.content);
+
+    settings.setStorage(ACCESSTOKEN, result.data.content.accessToken);
+
+    settings.setCookie(ACCESSTOKEN, result.data.content.accessToken, 30);
+  };
+};
+
+export const registerAapi = (userRegister) => {
+  return async (dispatch) => {
+    const result = await http.post("/api/Users/signup", userRegister);
+    //sau khi lấy dữ liệu tạo ra actionCreator = {type:,payload}
+    const action = registerAction(result.data.content);
+    // console.log(action);
+    await dispatch(action);
+
+    //Thay vì sau khi đăng nhập xong gọi api get profile thì logic đó mình đã code rồi => bây giờ chỉ cần dùng dispatch để gọi lại
+
+    //dispatch lại logic của 1 action async
+    // const actionGetProfile = getProfileApi();
+    // dispatch(actionGetProfile)
+
+    //Lưu vào localstorage và cookie
+    settings.setStorageJson(USER_LOGIN, result.data.content);
+
+    settings.setStorage(ACCESSTOKEN, result.data.content.accessToken);
+
+    settings.setCookie(ACCESSTOKEN, result.data.content.accessToken, 30);
+  };
 };

@@ -1,119 +1,120 @@
-import axios from "axios";
-import { history } from "../index.js";
-//Setup hang so, 1 so ham xu ly chung
-export const USER_LOGIN = "userLogin";
-export const ACCESSTOKEN = "accessToken";
+import axios from 'axios';
+import { history } from '../index';
+export const USER_LOGIN = 'userLogin';
+export const ACCESSTOKEN = 'accessToken';
+
 export const settings = {
-  setStorageJson: (name, data) => {
-    data = JSON.stringify(data);
-    localStorage.setItem(name, data);
-  },
-  setStorage: (name, data) => {
-    localStorage.setItem(name, data);
-  },
-  getStorageJson: (name) => {
-    if (localStorage.getItem(name)) {
-      const data = JSON.parse(localStorage.getItem(name));
-      return data;
+    setStorageJson: (name, data) => {
+        data = JSON.stringify(data);
+        localStorage.setItem(name, data);
+    },
+    setStorage: (name, data) => {
+        localStorage.setItem(name, data)
+    },
+    getStorageJson: (name) => {
+        if (localStorage.getItem(name)) {
+            const data = JSON.parse(localStorage.getItem(name));
+            return data
+        }
+        return; //undefined
+    },
+    getStore: (name) => {
+        if (localStorage.getItem(name)) {
+            const data = localStorage.getItem(name);
+            return data
+        }
+        return; //undefined
+    },
+    setCookieJson: (name, value, days) => {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        value = JSON.stringify(value);
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    },
+    getCookieJson: (name) => {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return JSON.parse(c.substring(nameEQ.length, c.length));
+        }
+        return null;
+    },
+    setCookie: (name, value, days) => {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    },
+    getCookie: (name) => {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    },
+    eraseCookie: (name) => {
+        document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
-    return; //undefined
-  },
-  getStore: (name) => {
-    if (localStorage.getItem(name)) {
-      const data = localStorage.getItem(name);
-      return data;
-    }
-    return; //undefined
-  },
-  setCookieJson: (name, value, days) => {
-    var expires = "";
-    if (days) {
-      var date = new Date();
-      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-      expires = "; expires=" + date.toUTCString();
-    }
-    value = JSON.stringify(value);
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
-  },
-  getCookieJson: (name) => {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(";");
-    for (var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) === " ") c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0)
-        return JSON.parse(c.substring(nameEQ.length, c.length));
-    }
-    return null;
-  },
-  setCookie: (name, value, days) => {
-    var expires = "";
-    if (days) {
-      var date = new Date();
-      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-      expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
-  },
-  getCookie: (name) => {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(";");
-    for (var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) === " ") c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-  },
-  eraseCookie: (name) => {
-    document.cookie =
-      name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-  },
-};
-export const TOKEN_CYBERSOFT =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMyIsIkhldEhhblN0cmluZyI6IjA4LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MDkxMjAwMDAwMCIsIm5iZiI6MTY1Mjg5MzIwMCwiZXhwIjoxNjgxMDU5NjAwfQ.YWfEjzumDyUA3XRRvMIkDiD1cOGgRKyAAeOTP3qTT2c";
-export const https = axios.create({
-  baseURL: "https:shop.cyberlearn.vn", //tat ca cac ham khi chen api deu su dung domain nay
-  timeout: 30000, //neu request mat 5 phut ma ko nhan duoc ket qua thi huy request
+}
+//Setup hằng số, 1 số hàm xử lý chung, ...
+export const TOKEN_CYBERSOFT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMyIsIkhldEhhblN0cmluZyI6IjA4LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MDkxMjAwMDAwMCIsIm5iZiI6MTY1Mjg5MzIwMCwiZXhwIjoxNjgxMDU5NjAwfQ.YWfEjzumDyUA3XRRvMIkDiD1cOGgRKyAAeOTP3qTT2c'
+export const http = axios.create({
+    baseURL: 'https://shop.cyberlearn.vn', //tất cả các hàm khi gọi api đều sử dụng domain này
+    timeout: 30000 //nếu request mất 5 phút mà không nhận được kết quả thì huỷ request
 });
-//cau hinh cho request:Client gui api den server
-https.interceptors.request.use(
-  (config) => {
+//Cấu hình cho request: Client gửi api đến server
+http.interceptors.request.use((config) => {
     config.headers = {
-      ...config.headers,
-      TokenCyberSoft: TOKEN_CYBERSOFT,
-      Authorization:'Bearer'+ settings.getStore(ACCESSTOKEN),
-    };
+        ...config.headers,
+        TokenCybersoft: TOKEN_CYBERSOFT,
+        Authorization: 'Bearer ' + settings.getStore(ACCESSTOKEN)
+    }
+
     return config;
-  },
-  (err) => {
+
+}, err => {
     console.log(err);
     return Promise.reject(err);
-  }
-);
-//cau hinh cho reponse:Server se tra du kieu ve chi client
-https.interceptors.response?.use(
-  (response) => {
+})
+//cấu hình cho response: Server sẽ trả dữ liệu về cho client
+http.interceptors.response.use((response) => {
     return response;
-  },
-  function (err) {
-    //That bai cua tat ca request  su dung https se tra vao day
-    if (err.response?.status === 401) {
-      //Chuyen huong trang ma ko can reload lai trang de du duoc cac state hien tai tren redux
-      history.push("/login");
+},  (error) => {
+
+    //Thất bại của tất cả request sử dụng http sẽ trả vào đây
+    console.log(error);
+    if(error.response?.status === 401) {
+        // window.location.href = '/login';
+        //Chuyển hướng trang mà không cần reload lại trang để giữ được các state hiện tại trên redux
+        history.push('/login');
     }
-    if (err.response?.status === 400 || err.response?.status === 400) {
-      //Chuyen huong trang ma ko can reload lai trang de du duoc cac state hien tai tren redux
-      history.push("/");
+    if(error.response?.status === 400 || error.response?.status === 400) {
+      
+        // history.push('/');
     }
-    return Promise.reject(err);
-  }
-);
-//Cac status code thuong gap
-//200:Request gui di va nhan lai ket qua thanh cong
-//201:Request gui di thanh cong va da duoc khoi tao
-//400:badrequest =>request gui di thanh cong tuy nhien ko tim thay du lieu tu tham so gui di
-//404:Not found:Ko tim thay api do hoac tuong tu 400
-//401:Unauthorize:token ko hop le ko co quyen truy cap vao api do
-//403:Forbinden token hop le tuy nhien chua du quyen de truy cap vao api do
-//500:Error server (Loi xay ra tren server co kha nang la front end gui du lieu chua hople dan den backend xu ly bi loi.backend code loi tren server =>Test bang post man hoac swagger neu api ko loi =>front end code sai ,nguoc lai tail fail tren post man va swagger thi bao backend fix)
+    return Promise.reject(error);
+})
+
+
+/* Các status code thường gặp
+    200: Request gửi đi và nhận về kết quả thành
+    201: request gửi đi thành công và đã được khởi tạo 
+    400: bad request => request gửi đi thành công tuy nhiên không tìm thấy dữ liệu từ tham số gửi đi
+    404: Not found (Không tìm thấy api đó), hoặc tương tự 400
+    401: Unauthorize token không hợp lệ không có quyền truy cập vào api đó
+    403: Forbinden token hợp lệ tuy nhiên chưa đủ quyền để truy cập vào api đó
+    500: Error server (Lỗi xảy ra trên server có khả năng là frontend gửi dữ liệu chưa hợp lệ dẫn đến backend xử lý bị lỗi). Backend code lỗi trên server ! => Test bằng post man hoặc swagger nếu api không lỗi => front code sai, ngược lại tail fail trên post man và swagger thì báo backend fix.
+
+*/

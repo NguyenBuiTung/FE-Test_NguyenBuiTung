@@ -1,9 +1,7 @@
+//rxslice
 import { createSlice } from "@reduxjs/toolkit";
-// import axios from "axios";
-import { https } from "../../util/config";
-// import { useParams } from "react-router-dom";
 // import axios from 'axios';
-
+import { http } from "../../util/config";
 const initialState = {
   arrProduct: [
     {
@@ -26,6 +24,7 @@ const initialState = {
     },
   ],
   productDetail: {},
+  productCart: [],
 };
 
 const productReducer = createSlice({
@@ -33,40 +32,63 @@ const productReducer = createSlice({
   initialState,
   reducers: {
     getDataProductAction: (state, action) => {
+      //B1: Lấy dữ liệu từ payload
       let arrProduct = action.payload;
       state.arrProduct = arrProduct;
     },
-    getDataDetailAction: (state, action) => {
+    getDataProductDetail: (state, action) => {
+      //B1: Lấy dữ liệu từ payload
       let productDetail = action.payload;
+      //B2: cập nhật state
       state.productDetail = productDetail;
+    },
+    getProductCart: (state, action) => {
+      let addToCart = action.payload;
+      //   console.log(addToCart)
+    //   var updateCart = [...addToCart];
+      //  console.log(updateCart);
+      let index = addToCart.findIndex(
+        (sp) => sp.values.id === addToCart.values.id
+      );
+      if (index !== -1) {
+        addToCart[index].quantitynew += 1;
+      } else {
+       state.productCart.push(addToCart);
+      }
+    //   state.productCart = updateCart;
     },
   },
 });
 
-export const { getDataProductAction, getDataDetailAction } =
+export const { getDataProductAction, getDataProductDetail, getProductCart } =
   productReducer.actions;
 
 export default productReducer.reducer;
-// aysnc action
 
+/*------------------------async action -------------- */
 export const getProductApi = () => {
   return async (dispatch) => {
-    let result = await https.get("/api/Product");
-    //Sau khi lay du lieu tu api ve => dispatch len reducer
-    //Tao ra aciton creator dua du lieu len reducer
+    //Xử lý api
+    let result = await http.get("/api/Product");
+    //Sau khi lấy dữ liệu từ api về => dispatch lên reducer
+    //Tạo ra action creator đưa dữ liệu lên reducer
     const action = getDataProductAction(result.data.content);
+    // console.log(action)
     dispatch(action);
   };
 };
-export const getDetailApi = (id) => {
+
+//cài npm i axios
+export const getProductDetailApi = (id) => {
   return async (dispatch) => {
-    // const params = useParams();
+    //Gọi api
     try {
-      let result = await https.get("/api/Product/getbyid?id=" + id);
-      const action = getDataDetailAction(result.data.content);
+      let result = await http.get("/api/Product/getbyid?id=" + id);
+      //Sau khi lấy dữ liệu từ api về => dispatch lên reducer
+      //Tạo ra action creator đưa dữ liệu lên reducer
+      const action = getDataProductDetail(result.data.content);
+      // console.log(action);
       dispatch(action);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 };
