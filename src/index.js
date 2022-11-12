@@ -31,7 +31,7 @@ root.render(
   <Provider store={store}>
     <HistoryRouter history={history}>
       <Routes>
-        <Route path="" element={<HomeTemplate/>}>
+        <Route path="*" element={<HomeTemplate/>}>
           <Route
             index
             element={
