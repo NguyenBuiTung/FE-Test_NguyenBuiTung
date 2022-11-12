@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
-import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
@@ -22,6 +21,7 @@ import {
   Routes,
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import UserTemplate from "./templates/UserTemplate/UserTemplate";
 import ResponsiveItem from "./HOC/ResponsiveItem/ResponsiveItem";
 import Home_Mobile from "./Pages/Home/Home_Mobile";
@@ -31,7 +31,7 @@ root.render(
   <Provider store={store}>
     <HistoryRouter history={history}>
       <Routes>
-        <Route path="*" element={<HomeTemplate/>}>
+        <Route path="/" element={<HomeTemplate/>}>
           <Route
             index
             element={
@@ -49,12 +49,12 @@ root.render(
           <Route path="*" element={<Navigate to={""} />}></Route>
         </Route>
 
-        <Route path="user" element={<UserTemplate />}>
+        {/* <Route path="user" element={<UserTemplate />}>
           <Route index element={<Login />}></Route>
           <Route path="login" element={<Login />}></Route>
           <Route path="register" element={<Register />}></Route>
           <Route path="*" element={<Navigate to="" />}></Route>
-        </Route>
+        </Route> */}
       </Routes>
     </HistoryRouter>
   </Provider>
