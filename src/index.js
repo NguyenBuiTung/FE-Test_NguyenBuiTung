@@ -21,7 +21,7 @@ import {
   Routes,
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
+import HomeTemplate from './templates/HomeTemplate/HomeTemplate.jsx'
 import UserTemplate from "./templates/UserTemplate/UserTemplate";
 import ResponsiveItem from "./HOC/ResponsiveItem/ResponsiveItem";
 import Home_Mobile from "./Pages/Home/Home_Mobile";
