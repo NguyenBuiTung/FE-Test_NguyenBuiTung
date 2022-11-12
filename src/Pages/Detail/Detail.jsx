@@ -4,7 +4,7 @@ import {
   getProductCart,
   getProductDetailApi,
 } from "../../redux/productReducer/productReducer";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, useLocation } from "react-router-dom";
 import { Button, Radio, Form, InputNumber } from "antd";
 import { useRef } from "react";
 // import { useRef } from "react";
@@ -24,36 +24,36 @@ const formItemLayout = {
 //   return e?.fileList;
 // };
 export default function Detail() {
-  const { productDetail, productCart } = useSelector(
-    (state) => state.productReducer
-  );
+  const { productDetail } = useSelector((state) => state.productReducer);
   // console.log(productCart)
-  const productRef = useRef({
-    quantitynew: "",
-    total: "",
-  });
-  const [price, setPrice] = useState(productDetail.price);
+
+  const useQuery = () => new URLSearchParams(useLocation().search);
+  let query = useQuery();
+  const initPrice = Number(query.get("price"));
+  // console.log(initPrice);
+  const [price, setPrice] = useState(initPrice);
   const [formValid, setFormValid] = useState(true);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { id } = useParams();
+  
   useEffect(() => {
     const action = getProductDetailApi(id);
     dispatch(action);
   }, [id]);
+  const productRef = useRef({
+    quantitynew: 1,
+    newSize: "",
+  });
+  // const onChange = (value) => {
+  //   setPrice(productDetail.price * value);
+  //   productRef.current.quantitynew = value;
+  //   // console.log(productRef.current);
+  // };
 
-  const onChange = (value) => {
-    setPrice(productDetail.price * value);
-    productRef.current.quantitynew = value;
-    // console.log(productRef.current);
-  };
-  const setPr = () => {
-    setPrice(productDetail.price);
-  };
-
-  const onFinish = (values) => {
-    let newCart = { ...productRef.current,values};
-    // console.log(newCart);
+  const addToCart = (carts) => {
+    let newCart = { ...productRef.current, carts };
+    console.log(newCart);
     const action = getProductCart(newCart);
     dispatch(action);
   };
@@ -66,8 +66,8 @@ export default function Detail() {
         <div className="col-8 mt-2">
           <Form
             form={form}
-            onFinish={() => onFinish(productDetail)}
-            onValuesChange={() => {
+            onValuesChange={(value) => {
+              productRef.current.newSize = value.newSize;
               setFormValid(
                 form.getFieldsError().some((item) => item.errors.length > 0)
               );
@@ -84,7 +84,7 @@ export default function Detail() {
             <p>{productDetail.description}</p>
             <h4>Available size </h4>
             <Form.Item
-              name="sizechon"
+              name="newSize"
               rules={[
                 {
                   required: true,
@@ -114,7 +114,10 @@ export default function Detail() {
                 max={100}
                 defaultValue={1}
                 className="d-block"
-                onChange={onChange}
+                onChange={(value)=>{
+                  setPrice(productDetail.price * value);
+                  productRef.current.quantitynew = value;
+                }}
               />
 
               <Button
@@ -122,9 +125,9 @@ export default function Detail() {
                 disabled={formValid}
                 htmlType="submit"
                 className="add-to-cart"
-                // onClick={() => {
-                //   pushCart(productDetail);
-                // }}
+                onClick={() => {
+                  addToCart(productDetail);
+                }}
               >
                 Add to cart
               </Button>
@@ -149,8 +152,10 @@ export default function Detail() {
                   </p>
                   <div className="d-flex align-items-center card-end">
                     <NavLink
-                      onClick={setPr}
-                      to={`/detail/${prod.id}`}
+                      onClick={() => {
+                        setPrice(prod.price);
+                      }}
+                      to={`/detail/${prod.id}?price=${prod.price}`}
                       className="btn btn-outline-success"
                     >
                       View Detail

@@ -45,18 +45,20 @@ export default function Home() {
                   <i className="fas fa-heart    "></i>
                   <div className="card-body">
                     <h3>{prod.name}</h3>
-                    <p>{prod.description.length>75 ?prod.description.substr(0,75)+'...':prod.description}</p>
+                    <p>
+                      {prod.description.length > 75
+                        ? prod.description.substr(0, 75) + "..."
+                        : prod.description}
+                    </p>
                     <div className="d-flex align-items-center card-end">
-                    <NavLink
-                      to={`/detail/${prod.id}`}
-                      className=" w-50 button-buy"
-                    >
-                      Buy Now <i className="fa fa-cart-plus"></i>
-                    </NavLink>
-                    <h5 className="w-50">{prod.price}$</h5>
-                    
+                      <NavLink
+                        to={`/detail/${prod.id}?price=${prod.price}`}
+                        className=" w-50 button-buy"
+                      >
+                        Buy Now <i className="fa fa-cart-plus"></i>
+                      </NavLink>
+                      <h5 className="w-50">{prod.price}$</h5>
                     </div>
-                    
                   </div>
                 </div>
               </div>

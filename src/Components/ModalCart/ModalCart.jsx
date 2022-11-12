@@ -1,9 +1,13 @@
-import { Button, Modal, Divider, Radio, Table, Image } from "antd";
+import { Button, Modal, Divider, Radio, Table, Image, InputNumber } from "antd";
 import React, { useState } from "react";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getProductDetailApi } from "../../redux/productReducer/productReducer";
+// import { useParams } from "react-router-dom";
+import {
+  deleteCarts,
+  getSubmitCartApi,
+  handleChange,
+} from "../../redux/productReducer/productReducer";
 
 const columns = [
   {
@@ -18,6 +22,10 @@ const columns = [
   {
     title: "Name",
     dataIndex: "name",
+  },
+  {
+    title: "Size",
+    dataIndex: "size",
   },
   {
     title: "Price",
@@ -54,38 +62,61 @@ const rowSelection = {
 };
 export default function ModalCart() {
   const { productCart } = useSelector((state) => state.productReducer);
-  // console.log(productDetail);
   const dispatch = useDispatch();
-  const { id } = useParams();
-  useEffect(() => {
-    const action = getProductDetailApi(id);
+  const onChange = (value, item) => {
+    // console.log("changed", value, item);
+    const action = handleChange({ value, item });
     dispatch(action);
-  }, [id]);
-
+  };
+  const delCart = (item) => {
+    // console.log(t)
+    const action = deleteCarts(item);
+    dispatch(action);
+  };
   const [selectionType, setSelectionType] = useState("checkbox");
   const [open, setOpen] = useState(false);
-  const data  = [
-    {
-      id:1,
-      name: 'tung',
-      img: '32',
-      price: 'New York No. 1 Lake Park',
-      quantity:<>
-       <Button type='primary' className=''>+</Button>
-       1
-      <Button type='primary' className=''>-</Button>
-      </>
-      ,
-      total:'1',
-      action:<>
-      <Button type='primary' className='me-2'>Edit</Button>
-      <Button type='danger'>Delete</Button>
-
-      </>
-
-    },
-
-  ];
+  const data = productCart.map((item, index) => {
+    return {
+      id: item.carts.id,
+      name: item.carts.name,
+      img: <Image width={200} src={item.carts.image} />,
+      price: item.carts.price + "$",
+      size: item.newSize,
+      quantity: (
+        <InputNumber
+          min={1}
+          max={100}
+          defaultValue={item.quantitynew}
+          value={item.quantitynew}
+          onChange={(value) => {
+            onChange(value, item);
+          }}
+        />
+      ),
+      total: item.quantitynew * item.carts.price + "$",
+      action: (
+        <Button
+          type="danger"
+          onClick={() => {
+            delCart(item);
+          }}
+        >
+          Delete
+        </Button>
+      ),
+    };
+  });
+  const Contine = (item) => {
+    // console.log("first");
+    const action = getSubmitCartApi(item);
+    dispatch(action);
+  };
+  let toTal = productCart.reduce((tsl, sp, index) => {
+    return (tsl += sp.quantitynew);
+  }, 0);
+  let toTalMoney = productCart.reduce((tt, sp, index) => {
+    return (tt += sp.quantitynew * sp.carts.price);
+  }, 0);
   return (
     <>
       <Button
@@ -98,13 +129,13 @@ export default function ModalCart() {
         }}
         onClick={() => setOpen(true)}
       >
-        <i className="fas fa-cart-plus"></i>(0)
+        <i className="fas fa-cart-plus"></i>({toTal})
       </Button>
       <Modal
-        title="Carts"
+        title={"Total Payment:" + toTalMoney + "$"}
         centered
         open={open}
-        onOk={() => setOpen(false)}
+        onOk={() => Contine(productCart)}
         onCancel={() => setOpen(false)}
         width={1000}
       >

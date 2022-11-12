@@ -2,6 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 // import axios from 'axios';
 import { http } from "../../util/config";
+import _ from "lodash";
 const initialState = {
   arrProduct: [
     {
@@ -25,6 +26,7 @@ const initialState = {
   ],
   productDetail: {},
   productCart: [],
+  productSearch: [],
 };
 
 const productReducer = createSlice({
@@ -45,23 +47,76 @@ const productReducer = createSlice({
     getProductCart: (state, action) => {
       let addToCart = action.payload;
       //   console.log(addToCart)
-    //   var updateCart = [...addToCart];
-      //  console.log(updateCart);
-      let index = addToCart.findIndex(
-        (sp) => sp.values.id === addToCart.values.id
+      let updateCart = [...state.productCart];
+      // console.log(updateCart);
+      let index = updateCart.findIndex(
+        (sp) =>
+          sp.carts.id === addToCart.carts.id && sp.newSize === addToCart.newSize
       );
       if (index !== -1) {
-        addToCart[index].quantitynew += 1;
+        updateCart[index].quantitynew += addToCart.quantitynew;
       } else {
-       state.productCart.push(addToCart);
+        updateCart.push(addToCart);
       }
-    //   state.productCart = updateCart;
+      state.productCart = updateCart;
+    },
+    deleteCarts: (state, action) => {
+      let del = action.payload;
+      // console.log(del)
+      let updateCart = [...state.productCart];
+      let index = updateCart.findIndex(
+        (sp) => sp.carts.id && sp.sizechon === del.carts.id && del.sizechon
+      );
+      updateCart.splice(index, 1);
+      state.productCart = updateCart;
+    },
+    handleChange: (state, action) => {
+      let change = action.payload;
+      console.log(change);
+      let updateCarts = [...state.productCart];
+      let index = updateCarts.findIndex(
+        (item) =>
+          item.newSize === change.item.newSize &&
+          item.carts.id === change.item.carts.id
+      );
+      if (index !== -1) {
+        updateCarts[index].quantitynew = change.value;
+      }
+
+      state.productCart = updateCarts;
+    },
+    getDataProductSearch: (state, action) => {
+      let arrSearch = action.payload;
+      state.productSearch = arrSearch;
+    },
+    handleSearchLow: (state, action) => {
+      let arrSearch = action.payload;
+      let newArrSearch = _.orderBy(arrSearch, ["price"], ["esc"]);
+      state.productSearch = newArrSearch;
+    },
+    handleSearchHigh: (state, action) => {
+      let arrSearch = action.payload;
+      let newArrSearch = _.orderBy(arrSearch, ["price"], ["desc"]);
+      state.productSearch = newArrSearch;
+    },
+    getSubmitCart: (state, action) => {
+      let submit = action.payload;
+      state.productCart = submit;
     },
   },
 });
 
-export const { getDataProductAction, getDataProductDetail, getProductCart } =
-  productReducer.actions;
+export const {
+  getDataProductAction,
+  getDataProductDetail,
+  getProductCart,
+  deleteCarts,
+  handleChange,
+  getDataProductSearch,
+  handleSearchLow,
+  handleSearchHigh,
+  getSubmitCart
+} = productReducer.actions;
 
 export default productReducer.reducer;
 
@@ -77,6 +132,17 @@ export const getProductApi = () => {
     dispatch(action);
   };
 };
+export const getProductSearchApi = (keyword) => {
+  return async (dispatch) => {
+    //Xử lý api
+    let result = await http.get(`/api/Product?keyword=${keyword}`);
+    //Sau khi lấy dữ liệu từ api về => dispatch lên reducer
+    //Tạo ra action creator đưa dữ liệu lên reducer
+    const action = getDataProductSearch(result.data.content);
+    // console.log(action)
+    dispatch(action);
+  };
+};
 
 //cài npm i axios
 export const getProductDetailApi = (id) => {
@@ -87,6 +153,19 @@ export const getProductDetailApi = (id) => {
       //Sau khi lấy dữ liệu từ api về => dispatch lên reducer
       //Tạo ra action creator đưa dữ liệu lên reducer
       const action = getDataProductDetail(result.data.content);
+      // console.log(action);
+      dispatch(action);
+    } catch (err) {}
+  };
+};
+export const getSubmitCartApi = () => {
+  return async (dispatch) => {
+    //Gọi api
+    try {
+      let result = await http.get('/api/Users/order');
+      //Sau khi lấy dữ liệu từ api về => dispatch lên reducer
+      //Tạo ra action creator đưa dữ liệu lên reducer
+      const action = getSubmitCart(result.data.content);
       // console.log(action);
       dispatch(action);
     } catch (err) {}

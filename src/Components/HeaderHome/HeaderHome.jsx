@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { ACCESSTOKEN, settings, USER_LOGIN } from "../../util/config";
 import "../../assets/scss/components/_HeaderHome.scss";
 import ModalCart from "../ModalCart/ModalCart";
+import ModalSearch from "../ModalSearch/ModalSearch";
 // import Carousel_Shoe from "../../Pages/Home/Carousel_Shoe";
 // import {history} from '../../index';
 export default function HeaderHome() {
@@ -48,17 +49,7 @@ export default function HeaderHome() {
         {/* <button className="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation" /> */}
         <div className="collapse navbar-collapse " id="collapsibleNavId">
           <form className=" my-2 my-lg-0 d-flex align-items-center">
-          <input
-              className="form-control me-sm-2 w-50"
-              type="text"
-              placeholder="Search"
-            />
-            <button
-              className="btn btn-outline-success my-2 my-sm-0 me-2"
-              type="submit"
-            >
-              Search
-            </button>
+          <ModalSearch/>
           <ModalCart/>
             <ul className="navbar-nav me-auto mt-2 mt-lg-0">
               <li className="nav-item">
