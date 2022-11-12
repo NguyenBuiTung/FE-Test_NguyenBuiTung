@@ -142,7 +142,7 @@ export default function Login() {
             Register now!
           </NavLink>
         </Form.Item>
-        <LoginFacebook />
+        {/* <LoginFacebook /> */}
       </Form>
     </div>
   );
