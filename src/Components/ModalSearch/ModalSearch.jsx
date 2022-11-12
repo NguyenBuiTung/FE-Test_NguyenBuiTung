@@ -7,22 +7,20 @@ import {
   handleSearchLow,
 } from "../../redux/productReducer/productReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useSearchParams } from "react-router-dom";
+import { NavLink, } from "react-router-dom";
 const { Search } = Input;
 export default function ModalSearch() {
   const { productSearch } = useSelector((state) => state.productReducer);
-  let [searchParams, setSearchParams] = useSearchParams();
-  const keyword = searchParams.get("keyword");
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const onSearch = (value) => {
-    setSearchParams({
-      //set lai url cua trinh duyet
-      keyword: value,
-    });
+  const onSearch = async (value) => {
     console.log(value);
-    const action = getProductSearchApi(keyword);
-    dispatch(action);
+    const action = getProductSearchApi(value);
+    await dispatch(action);
+    // setSearchParams({
+    //   //set lai url cua trinh duyet
+    //   keyword: value,
+    // });
   };
   const LowToHigh = (arr) => {
     const action = handleSearchLow(arr);
@@ -53,13 +51,13 @@ export default function ModalSearch() {
       >
         <Search
           placeholder="Shoe name"
-          enterButton='Search'
-          allowClear
+          enterButton="Search"
           size="large"
           onSearch={onSearch}
         />
         <h2 className="mt-3">Search Result</h2>
-        <Button className="d-block mb-2"
+        <Button
+          className="d-block mb-2"
           type="primary"
           onClick={() => {
             LowToHigh(productSearch);

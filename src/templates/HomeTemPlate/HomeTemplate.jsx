@@ -6,9 +6,7 @@ export default function HomeTemplate() {
   return (
     <div>
         <HeaderHome />
-        <div style={{marginBottom:'30px'}}>
-          <Outlet></Outlet>
-        </div>
+        <Outlet/>
         <Footer/>
     </div>
   )
