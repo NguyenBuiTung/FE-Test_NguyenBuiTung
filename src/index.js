@@ -21,17 +21,17 @@ import {
   Routes,
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import UserTemplate from "./templates/UserTemplate/UserTemplate";
+// import UserTemplate from "./templates/UserTemplate/UserTemplate";
 import ResponsiveItem from "./HOC/ResponsiveItem/ResponsiveItem";
 import Home_Mobile from "./Pages/Home/Home_Mobile";
-import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
+import HomeTemPlate from './template/HomeTemplate/HomeTemPlate'
 export const history = createBrowserHistory();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <HistoryRouter history={history}>
       <Routes>
-        <Route path="/" element={<HomeTemplate/>}>
+        <Route path="/" element={<HomeTemPlate/>}>
           <Route
             index
             element={
