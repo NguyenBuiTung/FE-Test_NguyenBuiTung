@@ -14,7 +14,11 @@
     border-radius: 10px;
   }
   .row {
-    // align-items: center;
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      //  align-items: center;
+      justify-content: center;
+    }
     .col-4 {
       img {
         border-radius: 50%;
@@ -23,6 +27,9 @@
       }
     }
     .col-8 {
+      @media screen and (max-width: 768px) {
+        margin-top: 10px;
+      }
       .ant-form {
         .col-6 {
           .ant-form-item {
@@ -43,6 +50,9 @@
               .ant-form-item-control {
                 .ant-form-item-control-input {
                   .ant-form-item-control-input-content {
+                    @media screen and (max-width: 576px) {
+                      margin-right: 10px;
+                    }
                     .ant-input {
                       padding: 16px 12px 14px 14px;
                       background: rgba(33, 33, 33, 0.08);
