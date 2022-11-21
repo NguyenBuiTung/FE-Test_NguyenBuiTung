@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 export default function Carousel_Shoe() {
   return (
    <div>
-  <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
+  <div id="carouselExampleCaptions" className="carousel slide py-lg-5 py-md-4" data-bs-ride="carousel" >
     <div className="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to={0} className="me-3" aria-label="Slide 1" />
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to={1} aria-label="Slide 2" className="me-3" />

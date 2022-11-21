@@ -25,6 +25,7 @@ import { createBrowserHistory } from "history";
 import ResponsiveItem from "./HOC/ResponsiveItem/ResponsiveItem";
 import Home_Mobile from "./Pages/Home/Home_Mobile";
 import HomeTemPlate from './template/HomeTemplate/HomeTemPlate'
+import Detail_mobile from "./Pages/Detail/Detail_mobile";
 export const history = createBrowserHistory();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -44,7 +45,7 @@ root.render(
           <Route path="search" element={<Search />}></Route>
           <Route path="profile" element={<Profile />}></Route>
           <Route path="detail">
-            <Route path=":id" element={<Detail />}></Route>
+            <Route path=":id" element={<ResponsiveItem component={Detail} mobileComponent={Detail_mobile} />}></Route>
           </Route>
           <Route path="*" element={<Navigate to={""} />}></Route>
         </Route>

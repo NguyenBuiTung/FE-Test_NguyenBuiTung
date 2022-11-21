@@ -5,7 +5,7 @@ import {
   getProductDetailApi,
 } from "../../redux/productReducer/productReducer";
 import { useParams, NavLink, useLocation } from "react-router-dom";
-import { Button, Radio, Form, InputNumber, Image } from "antd";
+import { Button, Radio, Form, InputNumber,Image } from "antd";
 import { useRef } from "react";
 // import { useRef } from "react";
 const formItemLayout = {
@@ -23,7 +23,7 @@ const formItemLayout = {
 //   }
 //   return e?.fileList;
 // };
-export default function Detail() {
+export default function Detail_mobile() {
   const { productDetail } = useSelector((state) => state.productReducer);
   // console.log(productCart)
 
@@ -36,7 +36,7 @@ export default function Detail() {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { id } = useParams();
-
+  
   useEffect(() => {
     const action = getProductDetailApi(id);
     dispatch(action);
@@ -59,11 +59,14 @@ export default function Detail() {
   };
   return (
     <div className="container">
-      <div className="row detail">
-        <div className="col-4 detail-left mt-2">
-          <Image width={250} src={productDetail.image} />
+      <div className=" detail">
+        <div className="detail_left mt-2 text-center">
+        <Image
+    width={440}
+    src={productDetail.image}
+  />
         </div>
-        <div className="col-8 detail_right mt-2">
+        <div className=" detail_right mt-2">
           <Form
             form={form}
             onValuesChange={(value) => {
@@ -114,7 +117,7 @@ export default function Detail() {
                 max={100}
                 defaultValue={1}
                 className="d-block"
-                onChange={(value) => {
+                onChange={(value)=>{
                   setPrice(productDetail.price * value);
                   productRef.current.quantitynew = value;
                 }}
@@ -139,7 +142,7 @@ export default function Detail() {
       <div className="row mt-2 product-row">
         {productDetail.relatedProducts?.map((prod, index) => {
           return (
-            <div className="col-4 product-col" key={index}>
+            <div className="col-12 product-col" key={index}>
               <div className="card product-card">
                 <img src={prod.image} alt="..." />
                 <i className="fas fa-heart    "></i>

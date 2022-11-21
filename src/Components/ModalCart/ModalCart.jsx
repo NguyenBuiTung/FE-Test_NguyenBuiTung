@@ -13,35 +13,43 @@ const columns = [
   {
     title: "ID",
     dataIndex: "id",
+   
     // render: (text) => <a>{text}</a>,
   },
   {
     title: "Img",
     dataIndex: "img",
+   
   },
   {
     title: "Name",
     dataIndex: "name",
+   
   },
   {
     title: "Size",
     dataIndex: "size",
+    
   },
   {
     title: "Price",
     dataIndex: "price",
+   
   },
   {
     title: "Quantity",
     dataIndex: "quantity",
+    
   },
   {
     title: "Total",
     dataIndex: "total",
+    
   },
   {
     title: "Action",
     dataIndex: "action",
+   
   },
 ];
 // console.log(productDetail)
@@ -79,11 +87,11 @@ export default function ModalCart() {
     return {
       id: item.carts.id,
       name: item.carts.name,
-      img: <Image width={200} src={item.carts.image} />,
+      img: <Image style={{width:50}} src={item.carts.image} />,
       price: item.carts.price + "$",
       size: item.newSize,
       quantity: (
-        <InputNumber
+        <InputNumber style={{width:50}}
           min={1}
           max={100}
           defaultValue={item.quantitynew}
@@ -154,6 +162,7 @@ export default function ModalCart() {
             }}
             columns={columns}
             dataSource={data}
+            tableLayout={"fixed"}
           />
         </div>
       </Modal>

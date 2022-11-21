@@ -12,7 +12,7 @@ export default function HeaderHome() {
   const renderLogin = () => {
     if (userProfile.name) {
       return (
-        <>
+        <div className="header-reponsive">
           <NavLink className="nav-link me-2 login-nav" to="/profile">
             {userProfile.name}
           </NavLink>
@@ -27,10 +27,10 @@ export default function HeaderHome() {
               window.location.href = "/login";
             }}
           >
-           Log out 
+            Log out
             <i className="fa fa-sign-out-alt ms-2"></i>
           </button>
-        </>
+        </div>
       );
     }
     return (
@@ -40,37 +40,61 @@ export default function HeaderHome() {
     );
   };
   return (
-    <>
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark d-flex headerhome">
-        <NavLink className="navbar-brand " to="/home" >
-          <img src="./img/image 3.png" alt="cybersoft" />
+    <div className="header">
+      <div class="container">
+        <div class="logo">
+          <NavLink  to='/home'> <img src="./img/image 3.png" alt="" /></NavLink>
           {renderLogin()}
-        </NavLink>
-        {/* <button className="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation" /> */}
-        <div className="collapse navbar-collapse " id="collapsibleNavId">
-          <form className=" my-2 my-lg-0 d-flex align-items-center">
-          <ModalSearch/>
+        </div>
+        <nav class="navbar navbar-expand-lg">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
           <ModalCart/>
-            <ul className="navbar-nav me-auto mt-2 mt-lg-0">
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/profile">
-                  Login
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <div className="dropdow">
+            <ModalSearch/>
+           
+           <NavLink className='header-login' to='/login'>Login</NavLink>
+           <NavLink className='header-register' to='/register'>Register</NavLink>
+            </div>
+           
+            {/* <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">
+                 <ModalSearch/>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">
+                 <ModalCart/>
+                </a>
+              </li>
+              <li class="nav-item">
+                <NavLink class="nav-link" aria-current="page" to="/login">
+                Login
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/register">
+              <li class="nav-item">
+                <NavLink class="nav-link" to="/register">
                   Register
                 </NavLink>
               </li>
-            </ul>
-          </form>
-        </div>
-      </nav>
-     <NavLink to='/home' className='header-end'>Home</NavLink>
-     <NavLink className='header-end'>Men</NavLink>
-     <NavLink className='header-end'>Women</NavLink>
-     <NavLink className='header-end'>Kid</NavLink>
-     <NavLink className='header-end'>Sport</NavLink>
-    </>
+              
+            </ul> */}
+          </div>
+        </nav>
+      
+      </div>
+      
+    </div>
   );
 }

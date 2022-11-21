@@ -7,6 +7,9 @@
     }
   }
   .ant-modal-body {
+    .ant-table{
+      table-layout: fixed;
+    }
     h2 {
       font-weight: 400;
       font-size: 25px;

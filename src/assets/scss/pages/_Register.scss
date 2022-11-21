@@ -3,6 +3,9 @@
 .container {
   .ant-form {
     h3 {
+      @media screen and (max-width: 765px) {
+        font-size: 25px;
+      }
       font-weight: 400;
       font-size: 40px;
       line-height: 48px;

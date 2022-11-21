@@ -3,18 +3,26 @@
 // .container{}
 .detail {
   padding: 58px 0;
-  .col-4 {
+  .detail-left {
     background: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     img {
+     
     }
   }
-  .col-8 {
+  .detail_right {
     .ant-form {
       padding-left: 128px;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
       .detail-name {
+        @media screen and (max-width: 765px) {
+          font-size: 25px;
+
+        }
         font-weight: 300;
         font-size: 30px;
         line-height: 36px;
@@ -89,6 +97,9 @@
     .product-card {
       position: relative;
       img {
+        @media screen and (max-width: 765px) {
+          width: 60%;
+        }
       }
       .fas {
         color: #fb0b0b;
@@ -101,11 +112,19 @@
         display: flex;
         flex-direction: column;
         h3 {
+          @media screen and (max-width: 765px) {
+            font-size: 20px;
+  
+          }
           font-weight: 300;
           font-size: 24px;
           color: $bg-dark;
         }
         p {
+          @media screen and (max-width: 765px) {
+            font-size: 16px;
+  
+          }
           flex: 1;
           font-weight: 300;
           font-size: 20px;
