@@ -2,12 +2,14 @@ import { Button, Modal, Divider, Radio, Table, Image, InputNumber } from "antd";
 import React, { useState } from "react";
 // import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 // import { useParams } from "react-router-dom";
 import {
   deleteCarts,
   getSubmitCartApi,
   handleChange,
 } from "../../redux/productReducer/productReducer";
+import { settings, USER_LOGIN } from "../../util/config";
 
 const columns = [
   {
@@ -69,6 +71,7 @@ const rowSelection = {
   }),
 };
 export default function ModalCart() {
+  const navigate=useNavigate()
   const { productCart } = useSelector((state) => state.productReducer);
   const dispatch = useDispatch();
   const onChange = (value, item) => {
@@ -135,7 +138,13 @@ export default function ModalCart() {
           border: "none",
           fontSize: "16px",
         }}
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          if(settings.getStorageJson(USER_LOGIN)) {
+           setOpen(true)
+        }else{
+          navigate('/login')
+        }
+        }}
       >
         <i className="fas fa-cart-plus"></i>({toTal})
       </Button>
