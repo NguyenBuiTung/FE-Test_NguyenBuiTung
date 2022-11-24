@@ -39,7 +39,7 @@ export default function Home_Mobile() {
         <div className="row product-home">
           {arrProduct.map((prod, index) => {
             return (
-              <div className="col-6  product-col" key={index}>
+              <div className="col-12  product-col" key={index}>
                 <div className="card product-card">
                   <img className="img-fluid" src={prod.image} alt="..." />
                   <i className="fas fa-heart    "></i>
