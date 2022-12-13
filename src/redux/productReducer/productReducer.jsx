@@ -1,7 +1,7 @@
 //rxslice
 import { createSlice } from "@reduxjs/toolkit";
 // import axios from 'axios';
-import { http } from "../../util/config";
+import { http, settings } from "../../util/config";
 import _ from "lodash";
 const initialState = {
   arrProduct: [
@@ -59,6 +59,7 @@ const productReducer = createSlice({
         updateCart.push(addToCart);
       }
       state.productCart = updateCart;
+      // settings.setStorageJson('carts',state.productCart)
     },
     deleteCarts: (state, action) => {
       let del = action.payload;
@@ -68,7 +69,9 @@ const productReducer = createSlice({
         (sp) => sp.carts.id && sp.sizechon === del.carts.id && del.sizechon
       );
       updateCart.splice(index, 1);
+      // localStorage.removeItem('updateCart')
       state.productCart = updateCart;
+    
     },
     handleChange: (state, action) => {
       let change = action.payload;

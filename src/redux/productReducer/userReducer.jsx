@@ -2,10 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ACCESSTOKEN, http, settings, USER_LOGIN } from "../../util/config";
 
 const initialState = {
-  //nếu localstorage có dữ liệu -> load dữ liệu default cho state.userLogin của redux, nếu localstorage không có thì gán object {}
-  userLogin: settings.getStorageJson(USER_LOGIN)
-    ? settings.getStorageJson(USER_LOGIN)
-    : {},
+  userLogin: {},
   userProfile: {},
   userRegister:{}
 };
@@ -48,18 +45,13 @@ export const loginApi = (userLogin) => {
     const action = loginAction(result.data.content);
     // console.log(action);
     await dispatch(action);
-
     //Thay vì sau khi đăng nhập xong gọi api get profile thì logic đó mình đã code rồi => bây giờ chỉ cần dùng dispatch để gọi lại
-
     //dispatch lại logic của 1 action async
     const actionGetProfile = getProfileApi();
     dispatch(actionGetProfile);
-
     //Lưu vào localstorage và cookie
     settings.setStorageJson(USER_LOGIN, result.data.content);
-
     settings.setStorage(ACCESSTOKEN, result.data.content.accessToken);
-
     settings.setCookie(ACCESSTOKEN, result.data.content.accessToken, 30);
   };
 };
@@ -72,26 +64,26 @@ export const getProfileApi = () => {
   };
 };
 
-export const loginFacebookApi = (tokenFBApp) => {
-  return async (dispatch) => {
-    const result = await http.post("/api/Users/facebooklogin", {
-      facebookToken: tokenFBApp,
-    });
-    //sau khi lấy dữ liệu tạo ra actionCreator = {type:,payload}
-    const action = loginAction(result.data.content);
-    await dispatch(action);
+// export const loginFacebookApi = (tokenFBApp) => {
+//   return async (dispatch) => {
+//     const result = await http.post("/api/Users/facebooklogin", {
+//       facebookToken: tokenFBApp,
+//     });
+//     //sau khi lấy dữ liệu tạo ra actionCreator = {type:,payload}
+//     const action = loginAction(result.data.content);
+//     await dispatch(action);
 
-    const actionGetProfile = getProfileApi();
-    dispatch(actionGetProfile);
+//     const actionGetProfile = getProfileApi();
+//     dispatch(actionGetProfile);
 
-    //Lưu vào localstorage và cookie
-    settings.setStorageJson(USER_LOGIN, result.data.content);
+//     //Lưu vào localstorage và cookie
+//     settings.setStorageJson(USER_LOGIN, result.data.content);
 
-    settings.setStorage(ACCESSTOKEN, result.data.content.accessToken);
+//     settings.setStorage(ACCESSTOKEN, result.data.content.accessToken);
 
-    settings.setCookie(ACCESSTOKEN, result.data.content.accessToken, 30);
-  };
-};
+//     settings.setCookie(ACCESSTOKEN, result.data.content.accessToken, 30);
+//   };
+// };
 
 export const registerAapi = (userRegister) => {
   return async (dispatch) => {

@@ -14,7 +14,7 @@ export default function HeaderHome() {
       return (
         <div className="header-reponsive">
           <NavLink className="nav-link me-2 login-nav" to="/profile">
-            {userProfile.name}
+           Hế lô Mấy Anh Chị HR ({userProfile.name})
           </NavLink>
           <button
             className="nav-link"
@@ -63,8 +63,8 @@ export default function HeaderHome() {
             <div className="dropdow">
             <ModalSearch/>
            
-           <NavLink className='header-login' to='/login'>Login</NavLink>
-           <NavLink className='header-register' to='/register'>Register</NavLink>
+           {/* <NavLink className='header-login' to='/login'>Login</NavLink>
+           <NavLink className='header-register' to='/register'>Register</NavLink> */}
             </div>
            
             {/* <ul class="navbar-nav">

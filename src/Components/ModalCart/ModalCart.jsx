@@ -15,43 +15,36 @@ const columns = [
   {
     title: "ID",
     dataIndex: "id",
-   
+
     // render: (text) => <a>{text}</a>,
   },
   {
     title: "Img",
     dataIndex: "img",
-   
   },
   {
     title: "Name",
     dataIndex: "name",
-   
   },
   {
     title: "Size",
     dataIndex: "size",
-    
   },
   {
     title: "Price",
     dataIndex: "price",
-   
   },
   {
     title: "Quantity",
     dataIndex: "quantity",
-    
   },
   {
     title: "Total",
     dataIndex: "total",
-    
   },
   {
     title: "Action",
     dataIndex: "action",
-   
   },
 ];
 // console.log(productDetail)
@@ -71,7 +64,7 @@ const rowSelection = {
   }),
 };
 export default function ModalCart() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const { productCart } = useSelector((state) => state.productReducer);
   const dispatch = useDispatch();
   const onChange = (value, item) => {
@@ -90,11 +83,12 @@ export default function ModalCart() {
     return {
       id: item.carts.id,
       name: item.carts.name,
-      img: <Image style={{width:50}} src={item.carts.image} />,
+      img: <Image style={{ width: 50 }} src={item.carts.image} />,
       price: item.carts.price + "$",
       size: item.newSize,
       quantity: (
-        <InputNumber style={{width:50}}
+        <InputNumber
+          style={{ width: 50 }}
           min={1}
           max={100}
           defaultValue={item.quantitynew}
@@ -122,6 +116,7 @@ export default function ModalCart() {
     const action = getSubmitCartApi(item);
     dispatch(action);
   };
+  // let local = settings.getStorageJson('carts');
   let toTal = productCart.reduce((tsl, sp, index) => {
     return (tsl += sp.quantitynew);
   }, 0);
@@ -139,11 +134,11 @@ export default function ModalCart() {
           fontSize: "16px",
         }}
         onClick={() => {
-          if(settings.getStorageJson(USER_LOGIN)) {
-           setOpen(true)
-        }else{
-          navigate('/login')
-        }
+          if (settings.getStorageJson(USER_LOGIN)) {
+            setOpen(true);
+          } else {
+            navigate("/login");
+          }
         }}
       >
         <i className="fas fa-cart-plus"></i>({toTal})
