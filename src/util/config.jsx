@@ -2,7 +2,7 @@ import axios from 'axios';
 import { history } from '../index';
 export const USER_LOGIN = 'userLogin';
 export const ACCESSTOKEN = 'accessToken';
-
+export const REFESHTOKEN='refeshToken'
 export const settings = {
     setStorageJson: (name, data) => {
         data = JSON.stringify(data);
@@ -69,17 +69,18 @@ export const settings = {
     }
 }
 //Setup hằng số, 1 số hàm xử lý chung, ...
-export const TOKEN_CYBERSOFT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMyIsIkhldEhhblN0cmluZyI6IjA4LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MDkxMjAwMDAwMCIsIm5iZiI6MTY1Mjg5MzIwMCwiZXhwIjoxNjgxMDU5NjAwfQ.YWfEjzumDyUA3XRRvMIkDiD1cOGgRKyAAeOTP3qTT2c'
+
 export const http = axios.create({
-    baseURL: 'https://shop.cyberlearn.vn', //tất cả các hàm khi gọi api đều sử dụng domain này
-    timeout: 30000 //nếu request mất 5 phút mà không nhận được kết quả thì huỷ request
+    baseURL: 'https://test-react.agiletech.vn', //tất cả các hàm khi gọi api đều sử dụng domain này
+    timeout: 6000 //nếu request mất 5 phút mà không nhận được kết quả thì huỷ request
 });
 //Cấu hình cho request: Client gửi api đến server
 http.interceptors.request.use((config) => {
     config.headers = {
         ...config.headers,
-        TokenCybersoft: TOKEN_CYBERSOFT,
-        Authorization: 'Bearer ' + settings.getStore(ACCESSTOKEN)
+        
+        Authorization: 'Bearer ' + settings.getStore(ACCESSTOKEN),
+        Refeshtoken:'Bearer ' + settings.getStore(REFESHTOKEN)
     }
 
     return config;

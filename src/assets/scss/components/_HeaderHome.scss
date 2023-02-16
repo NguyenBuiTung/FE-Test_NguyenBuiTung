@@ -2,11 +2,56 @@
 @import "../varialble/varialble";
 
 .header {
-  background-color: $bg-dark;
+  margin-top: 48px;
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .signin {
+      color: #f7f7f7;
+      .signinbutton {
+        .login-return{
+          background: #9c69e2;
+            box-shadow: 0px 5px 5px rgba(75, 93, 104, 0.1);
+            border-radius: 50px;
+            padding: 17px 60px;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 160%;
+            letter-spacing: 0.005em;
+
+            color: #ffffff;
+        }
+        .header-btn {
+          display: flex;
+          .profile-btn {
+            background: #9c69e2;
+            box-shadow: 0px 5px 5px rgba(75, 93, 104, 0.1);
+            border-radius: 50px;
+            padding: 17px 60px;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 160%;
+            letter-spacing: 0.005em;
+
+            color: #ffffff;
+          }
+          button {
+            background: #9c69e2;
+            box-shadow: 0px 5px 5px rgba(75, 93, 104, 0.1);
+            border-radius: 50px;
+            padding: 17px 60px;
+            margin-left: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 160%;
+            letter-spacing: 0.005em;
+
+            color: #ffffff;
+          }
+        }
+      }
+    }
     .logo {
       @media screen and (max-width: 576px) {
         flex-wrap: wrap;
@@ -17,13 +62,13 @@
       img {
         margin-right: 10px;
       }
-      .header-reponsive{
+      .header-reponsive {
         font-weight: 300;
-          font-size: 16px;
-          line-height: 19px;
-          color: $bg-c1-primary;
-          border: 1px solid #000000;
-          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        font-size: 16px;
+        line-height: 19px;
+        color: $bg-c1-primary;
+        border: 1px solid #000000;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       }
     }
     .navbar {

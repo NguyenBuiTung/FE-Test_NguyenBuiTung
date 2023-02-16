@@ -1,130 +1,152 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getProfileApi } from "../../redux/productReducer/userReducer";
-import { Button, Form, Input, Radio } from "antd";
-const layout = {
-  labelCol: {
-    span: 8,
+import { Table,Button,Input} from "antd";
+const { Search } = Input;
+const onSearch = (value) => console.log(value);
+const columns = [
+  {
+    title: "ID",
+    dataIndex: "id",
   },
-  wrapperCol: {
-    span: 16,
+  {
+    title: "Title",
+    dataIndex: "title",
   },
-};
-const validateMessages = {
-  required: "${label} is required!",
-  types: {
-    email: "${label} is not a valid email!",
-    number: "${label} is not a valid number!",
+  {
+    title: "Description",
+    dataIndex: "description",
   },
-  number: {
-    range: "${label} must be between ${min} and ${max}",
+  {
+    title: "Tags",
+    dataIndex: "tag",
   },
-};
+  {
+    title: "Action",
+    dataIndex: "action",
+  },
+];
+const data = [];
+for (let i = 0; i < 46; i++) {
+  data.push({
+    key: i,
+   id:`${i}`,
+    title: `ABC`,
+    description: 'Depcription',
+    tag: `HTML,CSS ${i}`,
+    action: <Button
+    type="danger"
+    onClick={() => {
+    }}
+  >
+    Delete
+  </Button> , 
+  
+  
+  });
+}
 export default function Profile() {
-  const { userProfile } = useSelector((state) => state.userReducer);
-  // console.log(userProfile)
-  const dispatch = useDispatch();
-  const onFinish = (values) => {
-    console.log(values);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const onSelectChange = (newSelectedRowKeys) => {
+    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
   };
-  useEffect(() => {
-    //Gọi api get profile
-    const actionAsync = getProfileApi();
-    dispatch(actionAsync);
-    //
-  }, []);
-  // console.log(userProfile.gender);
-  const [value, setValue] = useState(!!userProfile.gender);
-  // console.log(userProfile.gender);
-  const onChange = (e) => {
-    console.log("radio checked", e.target.value);
-    setValue();
+  const [dataSource, setDataSource] = useState([
+    {
+      key: '0',
+      name: 'Edward King 0',
+      age: '32',
+      address: 'London, Park Lane no. 0',
+    },
+    {
+      key: '1',
+      name: 'Edward King 1',
+      age: '32',
+      address: 'London, Park Lane no. 1',
+    },
+  ]);
+  const [count, setCount] = useState(2);
+  const handleAdd = () => {
+    const newData = {
+      key:count,
+      name: `Edward King ${count}`,
+      age: '32',
+      address: `London, Park Lane no. ${count}`,
+    };
+    setDataSource([...dataSource, newData]);
+    setCount(count + 1);
   };
-
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    selections: [
+      Table.SELECTION_ALL,
+      Table.SELECTION_INVERT,
+      Table.SELECTION_NONE,
+      {
+        key: "odd",
+        text: "Select Odd Row",
+        onSelect: (changableRowKeys) => {
+          let newSelectedRowKeys = [];
+          newSelectedRowKeys = changableRowKeys.filter((_, index) => {
+            if (index % 2 !== 0) {
+              return false;
+            }
+            return true;
+          });
+          setSelectedRowKeys(newSelectedRowKeys);
+        },
+      },
+      {
+        key: "even",
+        text: "Select Even Row",
+        onSelect: (changableRowKeys) => {
+          let newSelectedRowKeys = [];
+          newSelectedRowKeys = changableRowKeys.filter((_, index) => {
+            if (index % 2 !== 0) {
+              return true;
+            }
+            return false;
+          });
+          setSelectedRowKeys(newSelectedRowKeys);
+        },
+      },
+    ],
+  };
   return (
-    <div className=" profile">
-      <h3>Profile</h3>
-      <div className="row container">
-        <div className="col-4">
-          <img src={userProfile.avatar} alt="..." />
-        </div>
-        <div className="col-8">
-          <Form
-            className="d-flex"
-            {...layout}
-            name="nest-messages"
-            onFinish={onFinish}
-            validateMessages={validateMessages}
-          >
-            <div className="col-6">
-              <Form.Item
-                name={["user", "email"]}
-                label="Email"
-                rules={[
-                  {
-                    // required: true,
-                  },
-                ]}
-              >
-                <Input placeholder={userProfile.email} />
-              </Form.Item>
-              <Form.Item
-                name={["user", "phone"]}
-                label="Phone"
-                rules={[
-                  {
-                    type: "phone",
-                  },
-                ]}
-              >
-                <Input placeholder={userProfile.phone} />
-              </Form.Item>
-            </div>
-            <div className="col-6">
-              <Form.Item
-                name={["user", "name"]}
-                label="Name"
-                rules={[
-                  {
-                    type: "name",
-                  },
-                ]}
-              >
-                <Input placeholder={userProfile.name} />
-              </Form.Item>
-              <Form.Item
-                name={["user", "password"]}
-                label="Password"
-                rules={[
-                  {
-                    type: "password",
-                  },
-                ]}
-              >
-                <Input placeholder={userProfile.password} />
-              </Form.Item>
+    <div className="profile">
+      <div className="profile-left">
+        <h4>Post</h4>
+        <h4>Logout</h4>
+      </div>
+      <div className="profile-right">
+        <div className="container">
+          <div className="table-top">
+          <Button
+        onClick={handleAdd}
+        type="primary"
+        style={{
+          marginBottom: 0,
+        }}
+      >
+        Add new
+      </Button>
+      <Search
+      placeholder="Title"
+      onSearch={onSearch}
+      style={{
+        width: 200,
+      }}
+    />
+    <Input
+      placeholder="Tags"
+      
+      style={{
+        width: 200,
+      }}
+    />
+          </div>
 
-              <Form.Item label="Gender">
-                <Radio.Group onChange={onChange} value={value}>
-                  <Radio value={true}> Male </Radio>
-                  <Radio value={false}> Female </Radio>
-                </Radio.Group>
-                <Button type="primary" htmlType="submit">
-                  Update
-                </Button>
-              </Form.Item>
-
-              {/* <Form.Item
-                  wrapperCol={{
-                    ...layout.wrapperCol,
-                    offset: 8,
-                  }}
-                >
-                
-                </Form.Item> */}
-            </div>
-          </Form>
+          <Table rowSelection={rowSelection} columns={columns} dataSource={data} tableLayout={"fixed"} />
+         
         </div>
       </div>
     </div>

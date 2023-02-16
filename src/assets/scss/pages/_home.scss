@@ -1,68 +1,240 @@
 @import "../base/base";
 @import "../varialble/varialble";
-.product {
-  h2 {
-    font-weight: 400;
-    font-size: 40px;
-    line-height: 48px;
-    color: #ffffff;
-    background: linear-gradient(180deg, #f21299 0%, #1b02b5 100%);
-    padding: 12px 0;
-    border-radius: 10px;
-  }
-  .product-home {
-    .product-col {
+.carousel {
+  margin-top: 142px;
+  .container {
+    .carousel-left {
+      width: 40%;
+      h1 {
+        font-size: 80px;
+        font-weight: 700;
+        color: #212353;
+        line-height: 110%;
+        // display: flex;
+        // align-items: center;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 160%;
+        margin: 50px 0;
+      }
+      .btn-learnmore {
+        border-radius: 50px;
+        background: #9c69e2;
+        font-size: 18px;
+        font-weight: 800;
+        color: #ffffff;
+        border: none;
+        padding: 16px 36px;
+      }
+    }
+    .carousel-right {
+      width: 60%;
       display: flex;
-      margin-top: 24px;
-      .product-card {
-        position: relative;
-        img {
+      flex-direction: column;
+      justify-content: center;
+      img {
+        width: 700px;
+        height: 400px;
+      }
+    }
+  }
+}
+.features {
+  margin-top: 164px;
+  .container {
+    .future-top {
+      max-width: 600px;
+      margin: auto;
+    }
+    h2 {
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 130%;
+      margin-bottom: 50px;
+      color: #212353;
+      text-align: center;
+    }
+    p {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 160%;
+    }
+  }
+  .feature-body {
+    // position: relative;
+    .row {
+      .col-6 {
+        .item1 {
+          background: #68c9ba;
         }
-        .fa-heart {
-          color: #fb0b0b;
-          position: absolute;
-          top: 30px;
-          left: 85%;
-          font-size: $text-4xl;
-          // font-weight: 400;
+        .item2 {
+          background: #9c69e2;
         }
-        .card-body {
+        .item3 {
+          background: #f063b8;
+        }
+        .item4 {
+          background: #2d9cdb;
+        }
+        .item {
+          border-top-left-radius: 55%;
+          padding: 70px 40px;
+          opacity: 1;
+          /* border-radius: 50px; */
           display: flex;
-          flex-direction: column;
+          border-bottom-left-radius: 20%;
+          border-top-right-radius: 20%;
+          border-bottom-right-radius: 20%;
+          border-top-left-radius: 52%;
 
-          h3 {
-            font-weight: 300;
-            font-size: 24px;
-            color: $bg-dark;
-          }
-          p {
-            flex: 1;
-            font-weight: 300;
-            font-size: 20px;
-            color: #cbc9c9;
-          }
-          .card-end {
-            background-color: #9de167;
+          opacity: 1;
 
-            h5 {
-              margin-bottom: 0;
-              text-align: center;
-              background-color: #dedddc;
-              padding: 17px 27px;
-              font-weight: 600;
-              //   font-size: 20px;
+          display: flex;
+          .item-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            img {
+              width: 200px;
+              height: 207px;
             }
-            .button-buy {
-              text-align: center;
-
+          }
+          .item-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between h3 {
+              // position: absolute;
               font-weight: 400;
-              color: $bg-dark;
-              cursor: pointer;
-              // font-size: 20px;
-              //   line-height: 29px;
-             
+              font-size: 24px;
+              line-height: 130%;
+              /* or 31px */
+
+              display: flex;
+              align-items: center;
+
+              color: #212353;
+              // z-index: 10;
+            }
+            .content-future {
+              font-weight: 400;
+              font-size: 16px;
+              line-height: 160%;
+              /* or 26px */
+
+              /* 1 */
+
+              color: #4b5d68;
+            }
+            span {
+              h4 {
+                font-weight: 800;
+                font-size: 16px;
+                line-height: 160%;
+                /* identical to box height, or 26px */
+
+                display: flex;
+                align-items: center;
+                letter-spacing: 0.005em;
+
+                /* 2 */
+
+                color: #212353;
+              }
+              i {
+                color: #9c69e2;
+              }
             }
           }
+        }
+      }
+    }
+  }
+}
+.testimonials {
+  margin-top: 120px;
+  .container {
+    .testimonials-bg {
+      background: #9c69e2;
+      border-radius: 50px;
+      padding: 130px;
+      h2 {
+        // margin-top: 109px;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 130%;
+        /* or 52px */
+
+        display: flex;
+        align-items: center;
+
+        color: #ffffff;
+      }
+      .carousel {
+        .carousel-indicators {
+          button {
+          }
+        }
+        .carousel-inner {
+          .carousel-item {
+            display: flex;
+            justify-content: flex-start;
+            // margin: 0;
+            padding: 60px;
+            border-radius: 20px;
+            // box-shadow: 0px 20px 0px rgba(156, 105, 226, 0.3);
+            img {
+              width: 130px;
+              height: 90px;
+              margin: 0;
+              margin-right: 43px;
+            }
+            .carousel-itemleft {
+              h2 {
+                font-weight: 900;
+                font-size: 18px;
+                line-height: 160%;
+                /* or 29px */
+
+                display: flex;
+                align-items: center;
+                letter-spacing: 0.005em;
+
+                /* 2 */
+
+                color: #212353;
+              }
+              h3 {
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 160%;
+                /* identical to box height, or 22px */
+
+                display: flex;
+                align-items: center;
+                letter-spacing: 0.01em;
+
+                /* 3 */
+
+                color: #9c69e2;
+              }
+              p {
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 180%;
+                /* or 32px */
+
+                /* 1 */
+
+                color: #4b5d68;
+              }
+            }
+          }
+        }
+        .carousel-control-prev {
+        }
+        .carousel-control-next {
         }
       }
     }

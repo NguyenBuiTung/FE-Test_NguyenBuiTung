@@ -1,80 +1,33 @@
-@import "../base/base";
-@import "../varialble/varialble";
 .profile {
-  h3 {
-    margin-top: 47px;
-    font-weight: 400;
-    font-size: 40px;
-    line-height: 48px;
-    background: linear-gradient(180deg, #f21299 0%, #1b02b5 100%);
-    color: #fffefe;
-    padding: 13px 0;
-    margin-bottom: 26px;
-    padding-left: 25px;
-    border-radius: 10px;
-  }
-  .row {
-    @media screen and (max-width: 768px) {
-      flex-direction: column;
-      //  align-items: center;
-      justify-content: center;
-    }
-    .col-4 {
-      img {
-        border-radius: 50%;
-        width: 225px;
-        height: 225px;
-      }
-    }
-    .col-8 {
-      @media screen and (max-width: 768px) {
-        margin-top: 10px;
-      }
-      .ant-form {
-        .col-6 {
-          .ant-form-item {
-            .ant-row {
-              align-items: center;
-              .ant-form-item-label {
-                label {
-                  font-weight: 500;
-                  font-size: 18px;
-                  line-height: 24px;
-                  /* identical to box height, or 133% */
-                  letter-spacing: 0.135px;
-                  /* 00. On Surface / Medium Emphasis */
+  margin-top: 130px;
+  display: flex;
+  .profile-left {
+    width: 20%;
+    background: #d9d9d9;
+    h4 {
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 160%;
+      /* identical to box height, or 32px */
 
-                  color: rgba(0, 0, 0, 0.6);
-                }
-              }
-              .ant-form-item-control {
-                .ant-form-item-control-input {
-                  .ant-form-item-control-input-content {
-                    @media screen and (max-width: 576px) {
-                      margin-right: 10px;
-                    }
-                    .ant-input {
-                      padding: 16px 12px 14px 14px;
-                      background: rgba(33, 33, 33, 0.08);
-                    }
-                    button {
-                      font-weight: 400;
-                      line-height: 24px;
-                      color: #fffefe;
-                      background: #6200ee;
-                      /* 04 dp */
-                      box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14),
-                        0px 1px 10px rgba(0, 0, 0, 0.12),
-                        0px 2px 4px rgba(0, 0, 0, 0.2);
-                      border-radius: 50px;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.005em;
+
+      /* 2 */
+
+      color: #212353;
+    }
+  }
+  .profile-right {
+    width: 80%;
+    .container {
+    }
+    .table-top {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }

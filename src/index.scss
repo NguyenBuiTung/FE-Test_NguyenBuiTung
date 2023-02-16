@@ -1,15 +1,15 @@
 /*------------- component ----------------*/
 @import './assets/scss/components/HeaderHome';
-@import './assets/scss/components/Modal';
-@import './assets/scss/components/Carousel';
+
+
 @import './assets/scss/components/Footer.scss';
 /*------------- pages ----------------*/
 @import './assets/scss/pages/home'; //(Trong home,component, template.scss nếu có sử dụng biến và mixin thì import vào file đó)
-@import './assets/scss/pages/detail';
+
 @import './assets/scss/pages/login';
 @import './assets/scss/pages/profile';
-@import './assets/scss/pages/Register';
-@import './assets/scss/pages/cart';
+
+
 /*------------- templates ----------------*/
 // @import './assets/scss/templates/HomeTemplate';
 
