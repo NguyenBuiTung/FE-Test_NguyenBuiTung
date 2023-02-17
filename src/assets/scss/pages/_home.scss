@@ -3,9 +3,18 @@
 .carousel {
   margin-top: 142px;
   .container {
+    @media screen and (max-width: 768px){
+      flex-wrap: wrap;
+    }
     .carousel-left {
+      @media screen and (max-width: 768px) {
+       width: 100%;
+    }
       width: 40%;
       h1 {
+        @media screen and (max-width: 1080px){
+          font-size: 50px;
+        }
         font-size: 80px;
         font-weight: 700;
         color: #212353;
@@ -30,6 +39,9 @@
       }
     }
     .carousel-right {
+      @media screen and (max-width: 768px) {
+        width: 100%;
+    }
       width: 60%;
       display: flex;
       flex-direction: column;
@@ -66,8 +78,15 @@
     // position: relative;
     .row {
       .col-6 {
+        @media screen and (max-width: 768px){
+          width: 100%;
+          
+        }
         .item1 {
           background: #68c9ba;
+          @media screen and (max-width: 768px){
+            margin-bottom: 20px;
+          }
         }
         .item2 {
           background: #9c69e2;
@@ -156,6 +175,9 @@
   margin-top: 120px;
   .container {
     .testimonials-bg {
+      @media screen and (max-width: 768px){
+        padding: 30px;
+      }
       background: #9c69e2;
       border-radius: 50px;
       padding: 130px;
@@ -177,12 +199,15 @@
           }
         }
         .carousel-inner {
+          background-color: #ffffff;
+          border-radius: 20px;
           .carousel-item {
             display: flex;
             justify-content: flex-start;
             // margin: 0;
             padding: 60px;
-            border-radius: 20px;
+            // border-radius: 20px;
+          
             // box-shadow: 0px 20px 0px rgba(156, 105, 226, 0.3);
             img {
               width: 130px;
