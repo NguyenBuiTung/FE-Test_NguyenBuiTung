@@ -1,25 +1,42 @@
-
 import { useDispatch } from "react-redux";
 import { loginApi } from "../../redux/productReducer/userReducer";
 
-
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import { persistor } from "../../redux/configStore";
+// import { set } from "immer/dist/internal";
+const key = "updatable";
+const openMessage = () => {
+ 
+  
+};
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onFinish = async (values) => {
-    console.log("Received values of form: ", values);
-    const action = loginApi(values);
-    await dispatch(action);
-    navigate("/profile");
+    // console.log("Received values of form: ", values);
+    try {
+      const action = loginApi(values);
+      await dispatch(action,setTimeout(()=>{
+       persistor.purge()
+      //  window.location.href = "/login";
+      },1000000));
+        message.success({
+          content:"Đăng Nhập Thành Công",
+          key,
+          duration: 2,
+        });
+      navigate("/home");
+      
+    } catch (err) {
+      message.error("Sai Tên Tài Khoản Hoặc Mật Khẩu");
+    }
   };
   return (
     <div className="container login">
-      <h3>Signin</h3>
+      <h3>Đăng Nhập</h3>
       <hr />
       <Form
         name="normal_login"
@@ -28,8 +45,9 @@ export default function Login() {
           remember: true,
         }}
         onFinish={onFinish}
+       
       >
-        <Form.Item
+        <Form.Item 
           name="email"
           rules={[
             {
@@ -38,7 +56,7 @@ export default function Login() {
               message: "Please input your Email",
             },
             {
-              // pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+              pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
               message: "Invalid email",
             },
           ]}
@@ -48,7 +66,7 @@ export default function Login() {
             placeholder="Email"
           />
         </Form.Item>
-        {/* <Form.Item
+        <Form.Item
           name="password"
           rules={[
             {
@@ -62,10 +80,10 @@ export default function Login() {
             type="password"
             placeholder="Password"
           />
-        </Form.Item> */}
+        </Form.Item>
         <Form.Item>
           <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Remember me</Checkbox>
+            <Checkbox>Lưu</Checkbox>
           </Form.Item>
         </Form.Item>
 
@@ -74,13 +92,14 @@ export default function Login() {
             type="primary"
             htmlType="submit"
             className="login-form-button"
+            onClick={openMessage}
           >
-            Sign in
+           Đăng Nhập
           </Button>
-          {/* Or{" "}
+          Or{" "}
           <NavLink className="login-res" to="/register">
-            Register now!
-          </NavLink> */}
+            Đăng kí ngay
+          </NavLink>
         </Form.Item>
         {/* <LoginFacebook /> */}
       </Form>

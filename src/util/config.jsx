@@ -1,113 +1,122 @@
-import axios from 'axios';
-import { history } from '../index';
-export const USER_LOGIN = 'userLogin';
-export const ACCESSTOKEN = 'accessToken';
-export const REFESHTOKEN='refeshToken'
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { history } from "../index";
+export const USER_LOGIN = "userLogin";
+export const ACCESSTOKEN = "accessToken";
+// export const root = "persist:root";
+// export const REFESHTOKEN='refeshToken'
 export const settings = {
-    setStorageJson: (name, data) => {
-        data = JSON.stringify(data);
-        localStorage.setItem(name, data);
-    },
-    setStorage: (name, data) => {
-        localStorage.setItem(name, data)
-    },
-    getStorageJson: (name) => {
-        if (localStorage.getItem(name)) {
-            const data = JSON.parse(localStorage.getItem(name));
-            return data
-        }
-        return; //undefined
-    },
-    getStore: (name) => {
-        if (localStorage.getItem(name)) {
-            const data = localStorage.getItem(name);
-            return data
-        }
-        return; //undefined
-    },
-    setCookieJson: (name, value, days) => {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        value = JSON.stringify(value);
-        document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    },
-    getCookieJson: (name) => {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) === 0) return JSON.parse(c.substring(nameEQ.length, c.length));
-        }
-        return null;
-    },
-    setCookie: (name, value, days) => {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    },
-    getCookie: (name) => {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
-    },
-    eraseCookie: (name) => {
-        document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  setStorageJson: (name, data) => {
+    data = JSON.stringify(data);
+    localStorage.setItem(name, data);
+  },
+  setStorage: (name, data) => {
+    localStorage.setItem(name, data);
+  },
+  getStorageJson: (name) => {
+    if (localStorage.getItem(name)) {
+      const data = JSON.parse(localStorage.getItem(name));
+      return data;
     }
-}
+    return; //undefined
+  },
+  getStore: (name) => {
+    if (localStorage.getItem(name)) {
+      const data = localStorage.getItem(name);
+      return data;
+    }
+    return; //undefined
+  },
+  setCookieJson: (name, value, days) => {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    value = JSON.stringify(value);
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  },
+  getCookieJson: (name) => {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) === " ") c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0)
+        return JSON.parse(c.substring(nameEQ.length, c.length));
+    }
+    return null;
+  },
+  setCookie: (name, value, days) => {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  },
+  getCookie: (name) => {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) === " ") c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  },
+  eraseCookie: (name) => {
+    document.cookie =
+      name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+  },
+};
 //Setup hằng số, 1 số hàm xử lý chung, ...
 
+export const TOKEN_CYBERSOFT =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMyIsIkhldEhhblN0cmluZyI6IjExLzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MTE3MTIwMDAwMCIsIm5iZiI6MTY1Mjg5MzIwMCwiZXhwIjoxNjgxMzE4ODAwfQ.j4z4TCOvHfc7Iq372RxnnLGogFR3Yf1bukUxTce5WTc";
 export const http = axios.create({
-    baseURL: 'https://test-react.agiletech.vn', //tất cả các hàm khi gọi api đều sử dụng domain này
-    timeout: 6000 //nếu request mất 5 phút mà không nhận được kết quả thì huỷ request
+  baseURL: "https://shop.cyberlearn.vn", //tất cả các hàm khi gọi api đều sử dụng domain này
+  timeout: 30000, //nếu request mất 5 phút mà không nhận được kết quả thì huỷ request
 });
 //Cấu hình cho request: Client gửi api đến server
-http.interceptors.request.use((config) => {
+http.interceptors.request.use(
+  (config) => {
+    // const { userLogin } = useSelector(
+    //   (state) => state.persistedReducer.userReducer
+    // );
     config.headers = {
-        ...config.headers,
-        
-        Authorization: 'Bearer ' + settings.getStore(ACCESSTOKEN),
-        Refeshtoken:'Bearer ' + settings.getStore(REFESHTOKEN)
-    }
-
+      ...config.headers,
+      Token_Cybersoft: TOKEN_CYBERSOFT,
+      Authorization: "Bearer " + settings.getStore(ACCESSTOKEN),
+    };
     return config;
-
-}, err => {
+  },
+  (err) => {
     console.log(err);
     return Promise.reject(err);
-})
+  }
+);
 //cấu hình cho response: Server sẽ trả dữ liệu về cho client
-http.interceptors.response.use((response) => {
+http.interceptors.response.use(
+  (response) => {
     return response;
-},  (error) => {
-
+  },
+  (error) => {
     //Thất bại của tất cả request sử dụng http sẽ trả vào đây
     console.log(error);
-    if(error.response?.status === 401) {
-        // window.location.href = '/login';
-        //Chuyển hướng trang mà không cần reload lại trang để giữ được các state hiện tại trên redux
-        history.push('/login');
+    if (error.response?.status === 401) {
+      // window.location.href = '/login';
+      //Chuyển hướng trang mà không cần reload lại trang để giữ được các state hiện tại trên redux
+      history.push("/login");
     }
-    if(error.response?.status === 400 || error.response?.status === 400) {
-      
-        // history.push('/');
+    if (error.response?.status === 400 || error.response?.status === 400) {
+      // history.push('/');
     }
     return Promise.reject(error);
-})
-
+  }
+);
 
 /* Các status code thường gặp
     200: Request gửi đi và nhận về kết quả thành

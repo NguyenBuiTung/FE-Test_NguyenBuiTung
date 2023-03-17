@@ -1,154 +1,104 @@
-import React, { useState } from "react";
-import { Table,Button,Input} from "antd";
-const { Search } = Input;
-const onSearch = (value) => console.log(value);
-const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-  },
-  {
-    title: "Title",
-    dataIndex: "title",
-  },
-  {
-    title: "Description",
-    dataIndex: "description",
-  },
-  {
-    title: "Tags",
-    dataIndex: "tag",
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-  },
-];
-const data = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    key: i,
-   id:`${i}`,
-    title: `ABC`,
-    description: 'Depcription',
-    tag: `HTML,CSS ${i}`,
-    action: <Button
-    type="danger"
-    onClick={() => {
-    }}
-  >
-    Delete
-  </Button> , 
-  
-  
-  });
-}
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  cartAction,
+  productCartApi,
+} from "../../redux/productReducer/reducerProducts";
+import { Button, Form, InputNumber, Radio, message, Pagination } from "antd";
+// import { NavLink, useNavigate } from "react-router-dom";
+
 export default function Profile() {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
+  const { productCart } = useSelector(
+    (state) => state.persistedReducer.reducerProducts
+  );
+  const dispatch = useDispatch();
+  const [current, setCurrent] = useState(1);
+  useEffect(() => {
+    const action = productCartApi(current);
+    dispatch(action);
+  }, []);
+  const onFinish = (values, cart) => {
+    try {
+      const action = cartAction({ values, ...cart });
+      dispatch(action);
+      message.success("Thêm sản phẩm thành công");
+    } catch (err) {
+      console.log(err);
+      message.error("Thêm sản phẩm thất bại");
+    }
   };
-  const [dataSource, setDataSource] = useState([
-    {
-      key: '0',
-      name: 'Edward King 0',
-      age: '32',
-      address: 'London, Park Lane no. 0',
-    },
-    {
-      key: '1',
-      name: 'Edward King 1',
-      age: '32',
-      address: 'London, Park Lane no. 1',
-    },
-  ]);
-  const [count, setCount] = useState(2);
-  const handleAdd = () => {
-    const newData = {
-      key:count,
-      name: `Edward King ${count}`,
-      age: '32',
-      address: `London, Park Lane no. ${count}`,
-    };
-    setDataSource([...dataSource, newData]);
-    setCount(count + 1);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    selections: [
-      Table.SELECTION_ALL,
-      Table.SELECTION_INVERT,
-      Table.SELECTION_NONE,
-      {
-        key: "odd",
-        text: "Select Odd Row",
-        onSelect: (changableRowKeys) => {
-          let newSelectedRowKeys = [];
-          newSelectedRowKeys = changableRowKeys.filter((_, index) => {
-            if (index % 2 !== 0) {
-              return false;
-            }
-            return true;
-          });
-          setSelectedRowKeys(newSelectedRowKeys);
-        },
-      },
-      {
-        key: "even",
-        text: "Select Even Row",
-        onSelect: (changableRowKeys) => {
-          let newSelectedRowKeys = [];
-          newSelectedRowKeys = changableRowKeys.filter((_, index) => {
-            if (index % 2 !== 0) {
-              return true;
-            }
-            return false;
-          });
-          setSelectedRowKeys(newSelectedRowKeys);
-        },
-      },
-    ],
+  // const [pagination,setPagination]=useState()
+
+  const onChange = async (page) => {
+    setCurrent(page);
+    const action = productCartApi(page);
+    await dispatch(action);
   };
   return (
-    <div className="profile">
-      <div className="profile-left">
-        <h4>Post</h4>
-        <h4>Logout</h4>
-      </div>
-      <div className="profile-right">
-        <div className="container">
-          <div className="table-top">
-          <Button
-        onClick={handleAdd}
-        type="primary"
-        style={{
-          marginBottom: 0,
-        }}
-      >
-        Add new
-      </Button>
-      <Search
-      placeholder="Title"
-      onSearch={onSearch}
-      style={{
-        width: 200,
-      }}
-    />
-    <Input
-      placeholder="Tags"
-      
-      style={{
-        width: 200,
-      }}
-    />
-          </div>
+    <div className="container">
+      <div className=" product-card" id="top-card">
+        {productCart.map((item, index) => {
+          return (
+            <div className="card" key={index}>
+              <div className="imgBx">
+                <img
+                  src={`https://shop.cyberlearn.vn/images/${item.image}`}
+                  alt=""
+                />
+              </div>
+              <Form
+                onFinish={(values) => {
+                  onFinish(values, item);
+                }}
+                //  onValuesChange={onChange}
+                name="validate_other"
+                // {...formItemLayout}
+              >
+                <div className="contentBx">
+                  <h2>{item.name}</h2>
+                  <h3>{item.price}$</h3>
+                  <div className="size">
+                    <h3>Size :</h3>
+                    <Form.Item
+                      name="size"
+                      // label="Radio.Button"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Vui lòng chọn size",
+                        },
+                      ]}
+                    >
+                      <Radio.Group buttonStyle="solid">
+                        <Radio.Button value="36">36</Radio.Button>
+                        <Radio.Button value="37">37</Radio.Button>
+                        <Radio.Button value="38">38</Radio.Button>
+                        <Radio.Button value="39">39</Radio.Button>
+                      </Radio.Group>
+                    </Form.Item>
+                  </div>
+                  <div className="quantity">
+                    <h3>Số Lượng :</h3>
 
-          <Table rowSelection={rowSelection} columns={columns} dataSource={data} tableLayout={"fixed"} />
-         
-        </div>
+                    <Form.Item name="quantity" initialValue={1}>
+                      <InputNumber min={1} max={1000} />
+                    </Form.Item>
+                  </div>
+                  <Button type="primary" htmlType="submit" className="me-2">
+                    Thêm vào giỏ hàng
+                  </Button>
+                </div>
+              </Form>
+            </div>
+          );
+        })}
       </div>
+      <Pagination
+        current={current}
+        total={30}
+        onChange={onChange}
+        responsive={true}
+      />
     </div>
   );
 }

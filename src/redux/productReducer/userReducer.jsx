@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ACCESSTOKEN, http, REFESHTOKEN, settings, USER_LOGIN } from "../../util/config";
+import { ACCESSTOKEN, http, settings, USER_LOGIN } from "../../util/config";
+import { getProductOrderApi } from "./reducerProducts";
 
 const initialState = {
   userLogin: {},
-  userProfile: {},
-  userRegister:{}
+  userRegister: {},
 };
 
 const userReducer = createSlice({
@@ -15,13 +15,17 @@ const userReducer = createSlice({
       //B1: Lấy dữ liệu payload
       const userLogin = action.payload;
       //B2: Cập nhật lại state
+
       state.userLogin = userLogin;
     },
-    
+    registerAction: (state, action) => {
+      const userRegister = action.payload;
+      state.userRegister = userRegister;
+    },
   },
 });
 
-export const { loginAction, } = userReducer.actions;
+export const { loginAction, registerAction } = userReducer.actions;
 
 export default userReducer.reducer;
 
@@ -34,21 +38,26 @@ export default userReducer.reducer;
  */
 export const loginApi = (userLogin) => {
   return async (dispatch) => {
-    const result = await http.post("/auth/login",userLogin);
+    const result = await http.post("/api/Users/signin", userLogin);
     //sau khi lấy dữ liệu tạo ra actionCreator = {type:,payload}
-    console.log(result)
-    const action = loginAction(result.accessToken);
-    console.log(action);  
+    console.log(result);
+    const action = loginAction(result.data.content);
+    // console.log(action);
     await dispatch(action);
+    const actionOrder = getProductOrderApi();
+    dispatch(actionOrder);
     //Lưu vào localstorage và cookie
-    settings.setStorageJson(USER_LOGIN, result);
-    settings.setStorage(ACCESSTOKEN, result.accessToken);
-    settings.setStorage(REFESHTOKEN, result.refeshToken);
-    settings.setCookie(ACCESSTOKEN, result.accessToken, 30);
+    // settings.setStorageJson(USER_LOGIN, result.data.content);
+    settings.setStorage(ACCESSTOKEN, result.data.content.accessToken);
+    // settings.setCookie(ACCESSTOKEN, result.data.content.accessToken, 30);
   };
 };
+export const registerApi = (userRegister) => {
+  return async () => {
+    await http.post("/api/Users/signup", userRegister);
 
-
-
-
-
+    // console.log(result);
+    // const action = registerAction(result.data.content);
+    // await dispatch(action);
+  };
+};

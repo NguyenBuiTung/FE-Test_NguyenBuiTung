@@ -1,0 +1,18 @@
+.container {
+  .register {
+    padding: 30px 0;
+    .ant-form{
+     
+      .ant-form-item {
+        .ant-row {
+          .ant-form-item-label {
+            .ant-form-item-required::before {
+              content: none;
+            }
+          }
+        }
+      }
+    }
+  
+  }
+}
