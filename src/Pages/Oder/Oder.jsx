@@ -4,7 +4,8 @@ import {
   deleteOrderApi,
   getProductOrderApi,
 } from "../../redux/productReducer/reducerProducts";
-import { Table, Button } from "antd";
+import { ExclamationCircleFilled } from "@ant-design/icons";
+import { Table, Button, Modal } from "antd";
 const columns = [
   {
     title: "Thời gian đặt hàng",
@@ -16,13 +17,11 @@ const columns = [
     title: "Mã đơn hàng",
     dataIndex: "id",
     key: "id",
-    
   },
   {
     title: "Hủy đơn hàng",
     dataIndex: "delete",
     key: "delete",
-    
   },
 ];
 
@@ -31,7 +30,27 @@ export default function Oder() {
     (state) => state.persistedReducer.reducerProducts
   );
   const oder2 = orders.ordersHistory;
-  // console.log(oder2);
+  const { confirm } = Modal;
+  const showDeleteConfirm = (id) => {
+    confirm({
+      title: "Bạn có chắc chắn muốn hủy đơn hàng ?",
+      icon: <ExclamationCircleFilled />,
+      // content: "Nếu hủy ",
+      okText: "Có",
+      okType: "danger",
+      cancelText: "Không",
+      onOk() {
+        const orderId = {
+          orderId: id,
+        };
+        const action = deleteOrderApi(orderId);
+        dispatch(action);
+      },
+      onCancel() {
+        // console.log("Cancel");
+      },
+    });
+  };
   const data = oder2.map((item, index) => {
     return {
       key: index,
@@ -40,8 +59,9 @@ export default function Oder() {
       delete: (
         <Button
           onClick={() => {
-            deleteOrder(item.id);
+            showDeleteConfirm(item.id);
           }}
+          type="dashed"
         >
           <i className="fas fa-trash text-danger"></i>
         </Button>
@@ -72,7 +92,7 @@ export default function Oder() {
             <div className="order">
               <div className="text-left logo p-2 px-5">
                 {" "}
-               <img src="https://i.imgur.com/2zDU056.png" width={50} alt="" />
+                <img src="https://i.imgur.com/2zDU056.png" width={50} alt="" />
               </div>
               <div className="invoice p-5">
                 <h5>Đơn đặt hàng của bạn đã được xác nhận!!</h5>{" "}

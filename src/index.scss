@@ -1,19 +1,13 @@
 /*------------- component ----------------*/
 @import './assets/scss/components/HeaderHome';
-
-
-
 @import './assets/scss/components/Footer.scss';
 /*------------- pages ----------------*/
 @import './assets/scss/pages/home'; //(Trong home,component, template.scss nếu có sử dụng biến và mixin thì import vào file đó)
-
 @import './assets/scss/pages/login';
 @import './assets/scss/pages/cart';
 @import './assets/scss/pages/profile';
 @import './assets/scss/pages/register';
 @import './assets/scss/pages/order';
-
-
 /*------------- templates ----------------*/
 // @import './assets/scss/templates/HomeTemplate';
 @import './assets/scss/templates/TemplateBeautiful';

@@ -49,7 +49,7 @@ export const loginApi = (userLogin) => {
     //Lưu vào localstorage và cookie
     // settings.setStorageJson(USER_LOGIN, result.data.content);
     // settings.setStorage(ACCESSTOKEN, result.data.content.accessToken);
-    settings.setCookie(ACCESSTOKEN, result.data.content.accessToken, 600);
+    settings.setCookie(ACCESSTOKEN, result.data.content.accessToken,1/24);
   };
 };
 export const registerApi = (userRegister) => {
