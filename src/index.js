@@ -26,7 +26,7 @@ import Cart from "./Pages/Cart/Cart";
 import { PrivateRoute } from "./Components/PrivateRouter/PrivateRouter";
 import Oder from "./Pages/Oder/Oder";
 import TemplateBeautiful from "./template/TemplateBeautiful/TemplateBeautiful";
-import ShopTemplate from "./template/ShopTemplate/ShopTemplate";
+
 
 export const history = createBrowserHistory();
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -2,11 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteAction,
+  handleChangeAction,
   oderSuccessApi,
   softCartAction,
   softCartActionHigh,
 } from "../../redux/productReducer/reducerProducts";
-import { Button } from "antd";
+import { Button, InputNumber } from "antd";
 import { useNavigate } from "react-router-dom";
 export default function Cart() {
   const dispatch = useDispatch();
@@ -33,6 +34,11 @@ export default function Cart() {
     const action = softCartActionHigh(item);
     dispatch(action);
   };
+  console.log(
+    carts.map((item) => {
+      return item.price;
+    })
+  );
   const navigate = useNavigate();
   const orderSuccess = (cart) => {
     cart.forEach((item) => {
@@ -50,6 +56,11 @@ export default function Cart() {
       dispatch(action);
       navigate("/order");
     });
+  };
+  const handleChange = (value, item) => {
+    // console.log({ value, item });
+    const action = handleChangeAction({ value, item });
+    dispatch(action);
   };
   return (
     <div className="cart-product">
@@ -122,7 +133,15 @@ export default function Cart() {
                     </div>
                     <div className="d-flex flex-row align-items-center w-25 justify-content-center">
                       <span className="d-block fs-6">
-                        {item.values.quantity}*
+                        <InputNumber
+                          min={1}
+                          max={10}
+                         style={{width:50}}
+                          defaultValue={item.values.quantity}
+                          onChange={(value) => {
+                            handleChange(value, item);
+                          }}
+                        />
                       </span>
                       <span className="d-block ml-5 font-weight-bold fs-6 fw-bolder text-primary">
                         {item.price}$
@@ -141,7 +160,6 @@ export default function Cart() {
           </div>
           <div className="col-md-4">
             <div className="payment-info">
-          
               <div className="d-flex justify-content-between information">
                 <span>Subtotal:</span>
                 <span>{totolMoney}$</span>

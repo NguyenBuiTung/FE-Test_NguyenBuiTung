@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ACCESSTOKEN, http, settings, USER_LOGIN } from "../../util/config";
+import { ACCESSTOKEN, http, settings} from "../../util/config";
 import { getProductOrderApi } from "./reducerProducts";
 
 const initialState = {
@@ -48,8 +48,8 @@ export const loginApi = (userLogin) => {
     dispatch(actionOrder);
     //Lưu vào localstorage và cookie
     // settings.setStorageJson(USER_LOGIN, result.data.content);
-    settings.setStorage(ACCESSTOKEN, result.data.content.accessToken);
-    // settings.setCookie(ACCESSTOKEN, result.data.content.accessToken, 30);
+    // settings.setStorage(ACCESSTOKEN, result.data.content.accessToken);
+    settings.setCookie(ACCESSTOKEN, result.data.content.accessToken, 600);
   };
 };
 export const registerApi = (userRegister) => {

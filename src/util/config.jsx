@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { history } from "../index";
 export const USER_LOGIN = "userLogin";
 export const ACCESSTOKEN = "accessToken";
@@ -89,7 +88,7 @@ http.interceptors.request.use(
     config.headers = {
       ...config.headers,
       Token_Cybersoft: TOKEN_CYBERSOFT,
-      Authorization: "Bearer " + settings.getStore(ACCESSTOKEN),
+      Authorization: "Bearer " + settings.getCookie(ACCESSTOKEN),
     };
     return config;
   },

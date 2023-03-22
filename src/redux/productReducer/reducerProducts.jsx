@@ -51,6 +51,19 @@ const reducerProducts = createSlice({
     orderAction: (state, action) => {
       state.orders = action.payload;
     },
+    handleChangeAction: (state, action) => {
+      const change = action.payload;
+      // console.log(change);
+      const updateCart = [...state.carts];
+      const index = updateCart.findIndex(
+        (sp) =>
+          sp.id === change.item.id && sp.values.size === change.item.values.size
+      );
+      if (index !== -1) {
+        updateCart[index].values.quantity = change.value;
+      }
+      state.carts = updateCart;
+    },
   },
 });
 
@@ -61,6 +74,7 @@ export const {
   softCartAction,
   softCartActionHigh,
   orderAction,
+  handleChangeAction,
 } = reducerProducts.actions;
 
 export default reducerProducts.reducer;
