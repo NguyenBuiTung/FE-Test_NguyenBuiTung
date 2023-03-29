@@ -47,10 +47,10 @@ root.render(
           <Route path="/order" element={<Oder />}></Route>
           <Route path="*" element={<Navigate to={"home"} />}></Route>
         </Route>
-        <Route path="/" element={<TemplateBeautiful />}>
+        {/* <Route path="/" element={<TemplateBeautiful />}>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
-        </Route>
+        </Route> */}
       </Routes>
     </HistoryRouter>
     {/* </PersistGate> */}
